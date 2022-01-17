@@ -22,5 +22,5 @@ class Position:
             self.colNumber = 0
         return self
 
-    def __copy__(self):
+    def copy(self):
         return Position(self.index, self.lnNumber, self.colNumber, self.fName, self.fText)
