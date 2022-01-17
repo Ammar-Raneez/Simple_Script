@@ -19,3 +19,12 @@ class Number:
     def set_context(self, context=None):
         self.context = context
         return self
+
+    def copy(self):
+        copy = Number(self.value)
+        copy.set_pos(self.pos_start, self.pos_end)
+        copy.set_context(self.context)
+        return copy
+
+    def __repr__(self):
+        return str(self.value)

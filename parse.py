@@ -44,7 +44,7 @@ class Parser:
             self.advance()
 
             # after an identifier the expression is expected
-            expr = self.current_token
+            expr = NumberNode(self.current_token)
             if res.error:
                 return res
 
@@ -67,7 +67,6 @@ class Parser:
                     'Expected \'SAVE\', \'SHOW\', int, float, identifier'
                 ))
 
-            self.advance()
             return res.success(VarAccessNode(self.current_token))
 
         else:
