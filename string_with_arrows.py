@@ -1,3 +1,4 @@
+# Utility function that will add '^' symbol for identifying error location
 def string_with_arrows(text, pos_start, pos_end):
     result = ''
 

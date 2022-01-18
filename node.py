@@ -1,4 +1,4 @@
-### Number Node - Just an integer or float ###
+# Number Node - Just an integer or float
 class NumberNode:
     # tok -> a number Token
     # pos_start -> the node itself

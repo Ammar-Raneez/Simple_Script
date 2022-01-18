@@ -20,11 +20,13 @@ class Interpreter:
             Number(node.tok.value).set_context(context).set_pos(node.pos_start, node.pos_end)
         )
 
+    # visit var access (SHOW identifier)
     def visit_VarAccessNode(self, node, context):
         res = RTResult()
         var_name = node.var_name_tok.value
         value = context.symbol_table.get(var_name)
 
+        # invalid access input
         if not value:
             return res.failure(RTError(
                 node.pos_start, node.pos_end,
@@ -37,6 +39,7 @@ class Interpreter:
         value = value.copy().set_pos(node.pos_start, node.pos_end)
         return res.success(value)
 
+    # visit var assign (SAVE identifier value)
     def visit_VarAssignNode(self, node, context):
         res = RTResult()
         var_name = node.var_name_tok.value

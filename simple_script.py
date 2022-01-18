@@ -4,6 +4,7 @@ from interpreter import *
 from context import *
 from symbol_table import *
 
+# Create a global symbol table to keep track of variable names and their values
 global_symbol_table = SymbolTable()
 
 

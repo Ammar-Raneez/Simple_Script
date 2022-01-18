@@ -6,7 +6,7 @@ from error import IllegalCharError
 
 # Will convert the input to tokens
 class Lexer:
-    # fn -> string fileName
+    # f_name -> string fileName
     # text -> string text (input)
     def __init__(self, f_name, text):
         self.f_name = f_name
@@ -47,6 +47,7 @@ class Lexer:
         tokens.append(Token(TT_EOF, pos_start=self.pos))
         return tokens, None
 
+    # create identifiers
     def make_identifier(self):
         identifier_str = ''
         pos_start = self.pos.copy()
@@ -60,6 +61,7 @@ class Lexer:
         tok_type = TT_KEYWORD if identifier_str in KEYWORDS else TT_IDENTIFIER
         return Token(tok_type, identifier_str, pos_start, self.pos)
 
+    # create primitive numbers
     def make_number(self):
         num_str = ''
         decimal_count = 0

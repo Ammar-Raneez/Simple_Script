@@ -1,3 +1,4 @@
+# Will hold the result or any errors while parsing
 class ParseResult:
     def __init__(self):
         self.error = None

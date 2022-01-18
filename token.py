@@ -1,4 +1,7 @@
+# An object that will hold the type of current input with its respective value
 class Token:
+    # type_ -> a type of token (from the list in constants)
+    # value -> the actual value
     def __init__(self, type_, value=None, pos_start=None, pos_end=None):
         self.type = type_
         self.value = value

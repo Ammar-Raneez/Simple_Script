@@ -7,6 +7,7 @@ from node import *
 class Parser:
     # tokens -> list of Tokens provided by lexer
     # token_index -> int index tracker
+    # current_token -> currently referenced token
     def __init__(self, tokens):
         self.current_token = None
         self.tokens = tokens
@@ -25,8 +26,11 @@ class Parser:
         res = self.expr()
         return res
 
+    # create respective Nodes based on token type
     def expr(self):
         res = ParseResult()
+
+        # Variable assignment
         if self.current_token.matches(TT_KEYWORD, 'SAVE'):
             res.register_advancement()
             self.advance()
@@ -43,7 +47,7 @@ class Parser:
             res.register_advancement()
             self.advance()
 
-            # after an identifier the expression is expected
+            # after an identifier only the value is accepted
             expr = NumberNode(self.current_token)
             if res.error:
                 return res
@@ -56,6 +60,7 @@ class Parser:
                 'Expected \'SAVE\', \'SHOW\', int, float, identifier'
             ))
 
+        # variable access
         elif self.current_token.matches(TT_KEYWORD, 'SHOW'):
             res.register_advancement()
             self.advance()
@@ -69,6 +74,7 @@ class Parser:
 
             return res.success(VarAccessNode(self.current_token))
 
+        # invalid keyword
         else:
             return res.failure(InvalidSyntaxError(
                 self.current_token.pos_start, self.current_token.pos_end,

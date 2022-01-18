@@ -1,4 +1,4 @@
-### Runtime Result, similar to ParseResult, will hold the result and runtime or any error on runtime ###
+# Will hold the result or any errors on runtime
 class RTResult:
     def __init__(self):
         self.value = None
