@@ -104,18 +104,12 @@ class Parser:
             res.register_advancement()
             self.advance()
 
-            # after an identifier only the value is accepted
-            expr = NumberNode(self.current_token)
+            # after an identifier an expression is accepted
+            expr = res.register(self.expr())
             if res.error:
                 return res
 
             return res.success(VarAssignNode(var_name, expr))
-
-        if res.error:
-            return res.failure(InvalidSyntaxError(
-                self.current_token.pos_start, self.current_token.pos_end,
-                'Expected \'SAVE\', \'SHOW\', int, float, identifier'
-            ))
 
         # variable access
         elif self.current_token.matches(TT_KEYWORD, 'SHOW'):
