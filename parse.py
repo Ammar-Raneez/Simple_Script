@@ -24,11 +24,11 @@ class Parser:
     # parse the expression
     def parse(self):
         res = self.expr()
-        # if not res.error and self.current_token.type != TT_EOF:
-        #     return res.failure(InvalidSyntaxError(
-        #         self.current_token.pos_start, self.current_token.pos_end,
-        #         'Expected \'+\', \'-\', \'*\', \'/\' or \'^\''
-        #     ))
+        if not res.error and (self.current_token.type != TT_EOF and self.current_token.type != TT_IDENTIFIER):
+            return res.failure(InvalidSyntaxError(
+                self.current_token.pos_start, self.current_token.pos_end,
+                'Expected \'+\', \'-\', \'*\', \'/\' or \'^\''
+            ))
         return res
 
     def atom(self):
@@ -60,7 +60,7 @@ class Parser:
 
         return res.failure(InvalidSyntaxError(
             token.pos_start, token.pos_end,
-            "Expected int, float, identifier, '+', '-' or '('"
+            "Expected int, float, '+', '-' or '('"
         ))
 
     def power(self):
@@ -120,18 +120,18 @@ class Parser:
             if self.current_token.type != TT_IDENTIFIER:
                 return res.failure(InvalidSyntaxError(
                     self.current_token.pos_start, self.current_token.pos_end,
-                    'Expected \'SAVE\', \'SHOW\', int, float, identifier'
+                    'Expected identifier'
                 ))
 
             return res.success(VarAccessNode(self.current_token))
 
         node = res.register(self.bin_op(self.term, (TT_PLUS, TT_MINUS)))
 
-        # invalid keyword
+        # invalid input
         if res.error:
             return res.failure(InvalidSyntaxError(
                 self.current_token.pos_start, self.current_token.pos_end,
-                'Invalid Keyword, identifier, int, float, identifier, \'+\', \'-\' or \'(\''
+                'Expected Keyword, \'+\', \'-\' or \'(\''
             ))
 
         return res.success(node)
