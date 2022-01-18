@@ -1,5 +1,5 @@
 from rt_result import *
-from error import RTError
+from constants import *
 from number import *
 
 
@@ -50,3 +50,47 @@ class Interpreter:
         # assign the variable its value
         context.symbol_table.set(var_name, value)
         return res.success(value)
+
+    # binary operation
+    def visit_BinOpNode(self, node, context):
+        res = RTResult()
+        left = res.register(self.visit(node.left_node, context))
+        if res.error:
+            return res
+        right = res.register(self.visit(node.right_node, context))
+        if res.error:
+            return res
+
+        # handle binary operations
+        result, error = None, None
+        if node.op_tok.type == TT_PLUS:
+            result, error = left.added_to(right)
+        elif node.op_tok.type == TT_MINUS:
+            result, error = left.subbed_by(right)
+        elif node.op_tok.type == TT_MUL:
+            result, error = left.multed_by(right)
+        elif node.op_tok.type == TT_DIV:
+            result, error = left.dived_by(right)
+        elif node.op_tok.type == TT_POW:
+            result, error = left.powed_by(right)
+
+        if error:
+            return res.failure(error)
+        else:
+            return res.success(result.set_pos(node.pos_start, node.pos_end))
+
+    # unary operation
+    def visit_UnaryOpNode(self, node, context):
+        res = RTResult()
+        number = res.register(self.visit(node.node, context))
+        if res.error:
+            return res
+
+        error = None
+        # Easiest way to negate a number is multiply it by -1
+        if node.op_tok.type == TT_MINUS:
+            number, error = number.multed_by(Number(-1))
+        if error:
+            return res.failure(error)
+        else:
+            return res.success(number.set_pos(node.pos_start, node.pos_end))
