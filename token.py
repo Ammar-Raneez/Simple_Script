@@ -2,6 +2,8 @@
 class Token:
     # type_ -> a type of token (from the list in constants)
     # value -> the actual value
+    # pos_start -> Position of start of token (optional)
+    # pos_end -> Position of end of token (optional)
     def __init__(self, type_, value=None, pos_start=None, pos_end=None):
         self.type = type_
         self.value = value

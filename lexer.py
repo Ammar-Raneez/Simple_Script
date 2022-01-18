@@ -35,6 +35,27 @@ class Lexer:
                 tokens.append(self.make_number())
             elif self.current_char in LETTERS:
                 tokens.append(self.make_identifier())
+            elif self.current_char == '+':
+                tokens.append(Token(TT_PLUS, pos_start=self.pos))
+                self.advance()
+            elif self.current_char == '-':
+                tokens.append(Token(TT_MINUS, pos_start=self.pos))
+                self.advance()
+            elif self.current_char == '*':
+                tokens.append(Token(TT_MUL, pos_start=self.pos))
+                self.advance()
+            elif self.current_char == '/':
+                tokens.append(Token(TT_DIV, pos_start=self.pos))
+                self.advance()
+            elif self.current_char == '^':
+                tokens.append(Token(TT_POW, pos_start=self.pos))
+                self.advance()
+            elif self.current_char == '(':
+                tokens.append(Token(TT_LPAREN, pos_start=self.pos))
+                self.advance()
+            elif self.current_char == ')':
+                tokens.append(Token(TT_RPAREN, pos_start=self.pos))
+                self.advance()
 
             # handle invalid characters
             else:
