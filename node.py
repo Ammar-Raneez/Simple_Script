@@ -46,10 +46,10 @@ class UnaryOpNode:
         return f'({self.op_tok}, {self.node})'
 
 
-# Will hold saved variable names
+# Will hold saved variables
 class VarAccessNode:
     # var_name_tok -> variable name
-    # pos_start -> start of variable name
+    # pos_start -> start of SHOW token
     # pos_end -> the end of variable name itself
     def __init__(self, var_name_tok):
         self.var_name_tok = var_name_tok
@@ -68,3 +68,14 @@ class VarAssignNode:
         self.value_node = value_node
         self.pos_start = self.var_name_tok.pos_start
         self.pos_end = self.value_node.pos_end
+
+
+# Node that will be used to run scripts
+class VarRunNode:
+    # var_run_tok -> token to run script
+    # pos_start -> start of simc token
+    # pos_end -> the end of file name
+    def __init__(self, var_run_tok):
+        self.var_run_tok = var_run_tok
+        self.pos_start = self.var_run_tok.pos_start
+        self.pos_end = self.var_run_tok.pos_end
