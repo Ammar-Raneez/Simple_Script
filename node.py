@@ -71,7 +71,7 @@ class VarAssignNode:
 
 
 # Node that will be used to run scripts
-class VarRunNode:
+class RunNode:
     # var_run_tok -> token to run script
     # pos_start -> start of simc token
     # pos_end -> the end of file name
