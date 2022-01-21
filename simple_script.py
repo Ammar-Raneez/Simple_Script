@@ -13,6 +13,7 @@ def run(file_name, text):
     tokens, error = lexer.make_tokens()
     if error:
         return None, error
+    # return tokens, None
 
     # Generate AST (abstract syntax tree)
     parser = Parser(tokens)

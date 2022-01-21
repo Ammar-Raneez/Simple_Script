@@ -73,12 +73,12 @@ class Lexer:
         identifier_str = ''
         pos_start = self.pos.copy()
 
-        # allow letters numbers and underscores
+        # allow only letters
         while self.current_char is not None and self.current_char in LETTERS:
             identifier_str += self.current_char
             self.advance()
 
-        # token either a keyword or identifier (keywords are SHOW and SAVE)
+        # token either a keyword or identifier (keywords here are SHOW and SAVE)
         tok_type = TT_KEYWORD if identifier_str in KEYWORDS else TT_IDENTIFIER
         return Token(tok_type, identifier_str, pos_start, self.pos)
 
