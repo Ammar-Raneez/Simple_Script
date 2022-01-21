@@ -1,4 +1,7 @@
-![SimpleSript logo](https://raw.githubusercontent.com/Ammar-Raneez/Simple_Script/main/misc/image_2022-01-21_11-25-43.png?token=GHSAT0AAAAAABLIBHF65O2X3HIZHNWX5LIGYPTQ26A)
+<p align="center">
+      <img src="https://raw.githubusercontent.com/Ammar-Raneez/Simple_Script/main/misc/image_2022-01-21_11-25-43_resized.png?token=GHSAT0AAAAAABLIBHF66C7HL3U75W4AOM3SYPTQ7NA" />
+</p>
+
 ## SimpleScript v1.0.0-beta
 
 SimpleScript is a basic command language that supports variable assignment and access.
