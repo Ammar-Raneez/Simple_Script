@@ -1,6 +1,6 @@
 from position import *
 from constants import *
-from token import *
+from tokens import *
 from error import IllegalCharError
 
 
