@@ -64,6 +64,13 @@ File <stdin>, line 1
 
 SAVE A
       ^
+      
+SHOW C
+Traceback (most recent call last):
+  File <stdin>, line 1, in <simplescript>
+Runtime Error: 'c' is not defined
+
+SHOW C
 ```
 
 ## Limitations
