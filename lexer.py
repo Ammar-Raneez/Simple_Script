@@ -1,7 +1,7 @@
 from position import *
 from constants import *
 from tokens import *
-from error import IllegalCharError
+from error import IllegalCharError, ExpectedCharError
 
 
 # Will convert the input to tokens

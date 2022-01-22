@@ -1,13 +1,32 @@
-expr    : KEYWORD:SAVE IDENTIFiER expr
-        : term ((PLUS|MINUS) term)*
-term:   : factor ((MUL|DIV) factor)*
-factor  : (PLUS|MINUS) factor
-        : power
-power   : atom (POW factor)*
-atom    : INT|FLOAT|IDENTIFIER
-        : LPAREN expr RPAREN
+expr              : KEYWORD:SAVE IDENTIFiER expr
+                  : comp-expr ((KEYWORD:AND|KEYWORD:OR) comp-expr)*
+
+comp-expr         : NOT comp-expr
+                  : arith-expr ((EE|LT|GT|LTE|GTE) arith-expr)*
+
+arith-expr        : term ((PLUS|MINUS) term)*
+
+term              : factor ((MUL|DIV) factor)*
+
+factor            : (PLUS|MINUS) factor
+                  : power
+
+power             : atom (POW factor)*
+
+atom              : INT|FLOAT|IDENTIFIER
+                  : LPAREN expr RPAREN
 
 variable: SAVE (keyword) variable_letter (IDENTIFIER) atom
 SHOW variable_letter (IDENTIFIER)
 
 # The above Grammar Ordered based on priority
+
+
+Expressions must take priority for logical operations
+5 + 5 == 2 + 8
+(5 + 5) == (2 + 8)
+SAVE variable 5==5
+SAVE variable (5==5)
+
+5 == 5 AND 6 == 6
+(5 == 5) AND (6 == 6)
