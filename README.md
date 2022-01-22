@@ -85,9 +85,5 @@ Runtime Error: 'c' is not defined
 SHOW C
 ```
 
-## Limitations
-* A variable can only have alphabetical characters
-* Running from a script is not supported yet (Will be added on v1.0.0)
-
 ## Repl
 https://replit.com/@ammarraneez/SimpleScript
