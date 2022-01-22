@@ -42,6 +42,12 @@ class Parser:
             self.advance()
             return res.success(NumberNode(token))
 
+        # handle variable names
+        elif token.type == TT_IDENTIFIER:
+            res.register_advancement()
+            self.advance()
+            return res.success(VarAccessNode(token))
+
         # handle expressions within parentheses
         elif token.type == TT_LPAREN:
             res.register_advancement()
@@ -230,7 +236,7 @@ class Parser:
         if res.error:
             return res.failure(InvalidSyntaxError(
                 self.current_token.pos_start, self.current_token.pos_end,
-                'Expected Keyword, \'+\', \'-\' or \'(\', \'NOT\''
+                'Expected Keyword, \'+\', \'-\', \'(\', or \'NOT\''
             ))
 
         return res.success(node)
