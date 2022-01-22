@@ -5,5 +5,5 @@ while True:
     result, error = simple_script.run('<stdin>', text)
     if error:
         print(error.as_string())
-    else:
+    elif result:
         print(result)
