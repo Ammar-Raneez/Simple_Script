@@ -1,4 +1,4 @@
-## SimpleScript v1.0.0-beta [![SimpleScript](https://github.com/Ammar-Raneez/Simple_Script/actions/workflows/simplescript.yml/badge.svg)](https://github.com/Ammar-Raneez/Simple_Script/actions/workflows/simplescript.yml)
+## SimpleScript v1.0.0 [![SimpleScript](https://github.com/Ammar-Raneez/Simple_Script/actions/workflows/simplescript.yml/badge.svg)](https://github.com/Ammar-Raneez/Simple_Script/actions/workflows/simplescript.yml)
 
 <p align="center">
       <img src="https://raw.githubusercontent.com/Ammar-Raneez/Simple_Script/main/misc/image_2022-01-21_11-25-43_resized.png?token=GHSAT0AAAAAABLIBHF66C7HL3U75W4AOM3SYPTQ7NA" />
