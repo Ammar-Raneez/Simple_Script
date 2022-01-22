@@ -85,7 +85,7 @@ class UnitTest(unittest.TestCase):
         self.assertEqual(None, returned_val)
         self.assertIsInstance(returned_err, RTError)
 
-    def test_error_E(self):
+    def test_error_e(self):
         returned_val, returned_err = run('<stdin>', 'SAVE A 10 + C')
         self.assertEqual(None, returned_val)
         self.assertIsInstance(returned_err, RTError)
