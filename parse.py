@@ -68,20 +68,45 @@ class Parser:
 
     def factor(self):
         res = ParseResult()
-        tok = self.current_token
+        token = self.current_token
 
-        if tok.type in (TT_PLUS, TT_MINUS):
+        if token.type in (TT_PLUS, TT_MINUS):
             res.register_advancement()
             self.advance()
             factor = res.register(self.factor())
             if res.error:
                 return res
-            return res.success(UnaryOpNode(tok, factor))
+            return res.success(UnaryOpNode(token, factor))
 
         return self.power()
 
     def term(self):
         return self.bin_op(self.factor, (TT_MUL, TT_DIV))
+
+    def arith_expr(self):
+        return self.bin_op(self.factor, (TT_PLUS, TT_MINUS))
+
+    # comparison expressions
+    def comp_expr(self):
+        res = ParseResult()
+
+        if self.current_token.matches(TT_KEYWORD, 'NOT'):
+            operator_token = self.current_token
+            res.register_advancement()
+            self.advance()
+            node = res.register(self.comp_expr())
+            if res.error:
+                return res
+            return res.success(UnaryOpNode(operator_token, node))
+
+        node = res.register(self.bin_op(self.arith_expr, (TT_EE, TT_NE, TT_LT, TT_GT, TT_LTE, TT_GTE)))
+        if res.error:
+            return res.failure(InvalidSyntaxError(
+                self.current_token.pos_start, self.current_token.pos_end,
+                "Expected int, float, '+', '-' or '(', 'NOT"
+            ))
+
+        return res.success(node)
 
     # create respective Nodes based on token type
     def expr(self):
@@ -125,13 +150,13 @@ class Parser:
 
             return res.success(VarAccessNode(self.current_token))
 
-        node = res.register(self.bin_op(self.term, (TT_PLUS, TT_MINUS)))
+        node = res.register(self.bin_op(self.comp_expr, ((TT_KEYWORD, 'AND'), (TT_KEYWORD, 'OR'))))
 
         # invalid input
         if res.error:
             return res.failure(InvalidSyntaxError(
                 self.current_token.pos_start, self.current_token.pos_end,
-                'Expected Keyword, \'+\', \'-\' or \'(\''
+                'Expected Keyword, \'+\', \'-\' or \'(\', \'NOT\''
             ))
 
         return res.success(node)
@@ -145,7 +170,7 @@ class Parser:
         left = res.register(func_a())
         if res.error:
             return res
-        while self.current_token.type in ops:
+        while self.current_token.type in ops or (self.current_token.type, self.current_token.value) in ops:
             op_tok = self.current_token
             res.register_advancement()
             self.advance()
