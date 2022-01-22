@@ -22,7 +22,7 @@ def run(file_name, text):
         return None, ast.error
     # return ast.node, None
 
-    # # Run program
+    # Run program
     interpreter = Interpreter()
     context = Context('<simplescript>')
     context.symbol_table = global_symbol_table
