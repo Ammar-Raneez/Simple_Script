@@ -118,17 +118,17 @@ class Lexer:
         self.advance()
         return None, ExpectedCharError(pos_start, self.pos, "'=' (after '!')")
 
-    # create tokens for equality check
+    # create tokens for = and ==
     def make_equals(self):
+        tok_type = TT_EQ
         pos_start = self.pos.copy()
         self.advance()
 
         if self.current_char == '=':
             self.advance()
-            return Token(TT_EE, pos_start=pos_start, pos_end=self.pos), None
+            tok_type = TT_EE
 
-        self.advance()
-        return None, ExpectedCharError(pos_start, self.pos, "'=' (after '=')")
+        return Token(tok_type, pos_start=pos_start, pos_end=self.pos), None
 
     # create tokens for < and <=
     def make_less_than(self):

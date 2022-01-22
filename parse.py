@@ -72,6 +72,20 @@ class Parser:
                 return res
             return res.success(if_expr)
 
+        # handle for loops
+        elif token.matches(TT_KEYWORD, 'FOR'):
+            for_expr = res.register(self.for_expr())
+            if res.error:
+                return res
+            return res.success(for_expr)
+
+        # handle while loops
+        elif token.matches(TT_KEYWORD, 'WHILE'):
+            while_expr = res.register(self.while_expr())
+            if res.error:
+                return res
+            return res.success(while_expr)
+
         return res.failure(InvalidSyntaxError(
             token.pos_start, token.pos_end,
             "Expected int, float, '+', '-' or '('"
@@ -165,6 +179,103 @@ class Parser:
                 return res
 
         return res.success(IfNode(cases, else_case))
+
+    # handle for loop parsing
+    def for_expr(self):
+        res = ParseResult()
+        if not self.current_token.matches(TT_KEYWORD, 'FOR'):
+            return res.failure(InvalidSyntaxError(
+                self.current_token.pos_start, self.current_token.pos_end,
+                f"Expected 'FOR'"
+            ))
+
+        res.register_advancement()
+        self.advance()
+        if self.current_token.type != TT_IDENTIFIER:
+            return res.failure(InvalidSyntaxError(
+                self.current_token.pos_start, self.current_token.pos_end,
+                f"Expected identifier"
+            ))
+
+        var_name = self.current_token
+        res.register_advancement()
+        self.advance()
+        if self.current_token.type != TT_EQ:
+            return res.failure(InvalidSyntaxError(
+                self.current_token.pos_start, self.current_token.pos_end,
+                f"Expected '='"
+            ))
+
+        res.register_advancement()
+        self.advance()
+        start_value = res.register(self.expr())
+        if res.error:
+            return res
+
+        if not self.current_token.matches(TT_KEYWORD, 'TO'):
+            return res.failure(InvalidSyntaxError(
+                self.current_token.pos_start, self.current_token.pos_end,
+                f"Expected 'TO'"
+            ))
+
+        res.register_advancement()
+        self.advance()
+        end_value = res.register(self.expr())
+        if res.error:
+            return res
+
+        if self.current_token.matches(TT_KEYWORD, 'STEP'):
+            res.register_advancement()
+            self.advance()
+            step_value = res.register(self.expr())
+            if res.error:
+                return res
+        else:
+            step_value = None
+
+        if not self.current_token.matches(TT_KEYWORD, 'THEN'):
+            return res.failure(InvalidSyntaxError(
+                self.current_token.pos_start, self.current_token.pos_end,
+                f"Expected 'THEN'"
+            ))
+
+        res.register_advancement()
+        self.advance()
+
+        body = res.register(self.expr())
+        if res.error:
+            return res
+
+        return res.success(ForNode(var_name, start_value, end_value, step_value, body))
+
+    # handle while loop parsing
+    def while_expr(self):
+        res = ParseResult()
+        if not self.current_token.matches(TT_KEYWORD, 'WHILE'):
+            return res.failure(InvalidSyntaxError(
+                self.current_token.pos_start, self.current_token.pos_end,
+                f"Expected 'WHILE'"
+            ))
+
+        res.register_advancement()
+        self.advance()
+        condition = res.register(self.expr())
+        if res.error:
+            return res
+
+        if not self.current_token.matches(TT_KEYWORD, 'THEN'):
+            return res.failure(InvalidSyntaxError(
+                self.current_token.pos_start, self.current_token.pos_end,
+                f"Expected 'THEN'"
+            ))
+
+        res.register_advancement()
+        self.advance()
+        body = res.register(self.expr())
+        if res.error:
+            return res
+
+        return res.success(WhileNode(condition, body))
 
     # handle comparison expression parsing
     def comp_expr(self):
