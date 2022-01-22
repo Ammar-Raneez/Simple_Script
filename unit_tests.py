@@ -54,6 +54,14 @@ class UnitTest(unittest.TestCase):
         self.assertEqual(None, returned_val)
         self.assertIsInstance(returned_err, IllegalCharError)
 
+    def test_logical_save_a(self):
+        returned_val, returned_err = run('<stdin>', 'SAVE A 2 == 2 AND 4 == 5')
+        self.assertEqual('0', str(returned_val))
+
+    def test_logical_save_b(self):
+        returned_val, returned_err = run('<stdin>', 'SAVE A 2 == 2 AND 5 == 5')
+        self.assertEqual('1', str(returned_val))
+
 
 if __name__ == '__main__':
     unittest.main()

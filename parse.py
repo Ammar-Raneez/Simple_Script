@@ -27,7 +27,7 @@ class Parser:
         if not res.error and (self.current_token.type != TT_EOF and self.current_token.type != TT_IDENTIFIER):
             return res.failure(InvalidSyntaxError(
                 self.current_token.pos_start, self.current_token.pos_end,
-                'Expected \'+\', \'-\', \'*\', \'/\' or \'^\''
+                "Expected '+', '-', '*', '/', '^', '==', '!=', '<', '>', <=', '>=', 'AND' or 'OR'"
             ))
         return res
 
@@ -84,7 +84,7 @@ class Parser:
         return self.bin_op(self.factor, (TT_MUL, TT_DIV))
 
     def arith_expr(self):
-        return self.bin_op(self.factor, (TT_PLUS, TT_MINUS))
+        return self.bin_op(self.term, (TT_PLUS, TT_MINUS))
 
     # comparison expressions
     def comp_expr(self):
