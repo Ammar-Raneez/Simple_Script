@@ -81,6 +81,24 @@ SHOW F
 SHOW G
 20
 
+SAVE A 1
+1
+FOR i=1 TO 6 THEN SAVE A A*i
+SHOW A
+120
+
+SAVE A 1
+1
+FOR i=5 TO 0 STEP -1 THEN SAVE A A*i
+SHOW A
+120
+
+SAVE A 1
+1
+WHILE A < 50 THEN SAVE A A+1
+SHOW A
+50
+
 SAVEA 10
 Invalid Syntax: Expected Keyword, '+', '-' or '('
 File <stdin>, line 1

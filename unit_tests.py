@@ -65,6 +65,21 @@ class UnitTest(unittest.TestCase):
         returned_val, returned_err = run('<stdin>', f'SAVE B A+5')
         self.assertEqual('20', str(returned_val))
 
+    def test_p(self):
+        run('<stdin>', 'SAVE A 1')
+        run('<stdin>', f'FOR i=1 TO 6 THEN SAVE A A*i')
+        self.assertEqual('120', str(run('<stdin>', 'SHOW A')[0]))
+
+    def test_q(self):
+        run('<stdin>', 'SAVE A 1')
+        run('<stdin>', f'FOR i=5 TO 0 STEP -1 THEN SAVE A A*i')
+        self.assertEqual('120', str(run('<stdin>', 'SHOW A')[0]))
+
+    def test_r(self):
+        run('<stdin>', 'SAVE A 10')
+        run('<stdin>', f'WHILE A < 50 THEN SAVE A A+1')
+        self.assertEqual('50', str(run('<stdin>', 'SHOW A')[0]))
+
     def test_error_a(self):
         returned_val, returned_err = run('<stdin>', 'SAVEA 10')
         self.assertEqual(None, returned_val)
