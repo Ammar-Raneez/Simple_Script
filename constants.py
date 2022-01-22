@@ -24,4 +24,10 @@ TT_GTE = 'GTE'
 TT_EOF = 'EOF'
 TT_IDENTIFIER = 'IDENTIFIER'
 TT_KEYWORD = 'KEYWORD'
-KEYWORDS = ['SHOW', 'SAVE', 'AND', 'OR', 'NOT']
+KEYWORDS = [
+    'SHOW',
+    'SAVE',
+    'AND',
+    'OR',
+    'NOT'
+]

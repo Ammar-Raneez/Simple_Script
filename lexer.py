@@ -33,7 +33,9 @@ class Lexer:
             # Create tokens based on the current character
             elif self.current_char in DIGITS:
                 tokens.append(self.make_number())
-            elif self.current_char in LETTERS:
+
+            # An identifier can only start with letters or an underscore
+            elif self.current_char in LETTERS + '_':
                 tokens.append(self.make_identifier())
             elif self.current_char == '+':
                 tokens.append(Token(TT_PLUS, pos_start=self.pos))
@@ -93,8 +95,8 @@ class Lexer:
         identifier_str = ''
         pos_start = self.pos.copy()
 
-        # allow only letters
-        while self.current_char is not None and self.current_char in LETTERS:
+        # allow letters, digits and underscores
+        while self.current_char is not None and self.current_char in LETTERS + DIGITS + '_':
             identifier_str += self.current_char
             self.advance()
 
