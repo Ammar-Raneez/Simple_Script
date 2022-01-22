@@ -4,7 +4,7 @@
       <img src="https://raw.githubusercontent.com/Ammar-Raneez/Simple_Script/main/misc/image_2022-01-21_11-25-43_resized.png?token=GHSAT0AAAAAABLIBHF66C7HL3U75W4AOM3SYPTQ7NA" />
 </p>
 
-SimpleScript is a basic command language that supports variable assignment and access.
+SimpleScript is a basic command language that supports saving and accessing of variables, conditional statements and loops.
 
 ## Please Note
 Python version 3 will be required to run
