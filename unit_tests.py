@@ -70,6 +70,11 @@ class UnitTest(unittest.TestCase):
         self.assertEqual(None, returned_val)
         self.assertIsInstance(returned_err, IllegalCharError)
 
+    def test_error_d(self):
+        returned_val, returned_err = run('<stdin>', 'SAVE A 10/0')
+        self.assertEqual(None, returned_val)
+        self.assertIsInstance(returned_err, RTError)
+
 
 if __name__ == '__main__':
     unittest.main()
