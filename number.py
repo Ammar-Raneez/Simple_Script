@@ -51,42 +51,52 @@ class Number:
 
             return Number(self.value / other.value).set_context(self.context), None
 
+    # powered by a number
     def powed_by(self, other):
         if isinstance(other, Number):
             return Number(self.value ** other.value).set_context(self.context), None
 
+    # equality comparison to a number
     def get_comparison_eq(self, other):
         if isinstance(other, Number):
             return Number(int(self.value == other.value)).set_context(self.context), None
 
+    # not equal comparison to a number
     def get_comparison_ne(self, other):
         if isinstance(other, Number):
             return Number(int(self.value != other.value)).set_context(self.context), None
 
+    # less than comparison to a number
     def get_comparison_lt(self, other):
         if isinstance(other, Number):
             return Number(int(self.value < other.value)).set_context(self.context), None
 
+    # greater than comparison to a number
     def get_comparison_gt(self, other):
         if isinstance(other, Number):
             return Number(int(self.value > other.value)).set_context(self.context), None
 
+    # less than or equal to comparison to a number
     def get_comparison_lte(self, other):
         if isinstance(other, Number):
             return Number(int(self.value <= other.value)).set_context(self.context), None
 
+    # greater than or equal to comparison to a number
     def get_comparison_gte(self, other):
         if isinstance(other, Number):
             return Number(int(self.value >= other.value)).set_context(self.context), None
 
+    # AND logic with a number
     def anded_by(self, other):
         if isinstance(other, Number):
             return Number(int(self.value and other.value)).set_context(self.context), None
 
+    # OR logic with a number
     def ored_by(self, other):
         if isinstance(other, Number):
             return Number(int(self.value or other.value)).set_context(self.context), None
 
+    # ! logic with the number
     def notted(self):
         return Number(1 if self.value == 0 else 0).set_context(self.context), None
 

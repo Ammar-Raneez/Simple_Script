@@ -31,6 +31,7 @@ class Parser:
             ))
         return res
 
+    # handle simple atomic parsing
     def atom(self):
         res = ParseResult()
         token = self.current_token
@@ -63,9 +64,11 @@ class Parser:
             "Expected int, float, '+', '-' or '('"
         ))
 
+    # handle power operation parsing
     def power(self):
         return self.bin_op(self.atom, (TT_POW,), self.factor)
 
+    # handle factor parsing
     def factor(self):
         res = ParseResult()
         token = self.current_token
@@ -80,13 +83,15 @@ class Parser:
 
         return self.power()
 
+    # handle term parsing
     def term(self):
         return self.bin_op(self.factor, (TT_MUL, TT_DIV))
 
+    # handle arithmetic expression parsing
     def arith_expr(self):
         return self.bin_op(self.term, (TT_PLUS, TT_MINUS))
 
-    # comparison expressions
+    # handle comparison expression parsing
     def comp_expr(self):
         res = ParseResult()
 
@@ -108,7 +113,7 @@ class Parser:
 
         return res.success(node)
 
-    # create respective Nodes based on token type
+    # Handle overall expression parsing - create respective Nodes based on token type
     def expr(self):
         res = ParseResult()
 

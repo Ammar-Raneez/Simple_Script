@@ -150,7 +150,7 @@ class Lexer:
 
         return Token(token_type, pos_start=pos_start, pos_end=self.pos), None
 
-    # create primitive numbers
+    # create primitive number tokens
     def make_number(self):
         num_str = ''
         decimal_count = 0
