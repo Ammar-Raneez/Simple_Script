@@ -45,11 +45,23 @@ SAVE A 10*(10+5)
 SAVE B 10^2
 100
 
+SAVE C 2 == 2 AND 4 == 5
+0
+
+SAVE D 2 == 2 AND 5 == 5
+1
+
 SHOW A
 150
 
 SHOW B
 100
+
+SHOW C
+0
+
+SHOW D
+1
 
 SAVEA 10
 Invalid Syntax: Expected Keyword, '+', '-' or '('
