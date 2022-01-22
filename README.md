@@ -54,6 +54,12 @@ SAVE D 2 == 2 AND 5 == 5
 SAVE E IF 2==5 THEN 2 ELIF 3==5 THEN 3 ELSE 5
 5
 
+SAVE F 10+5
+15
+
+SAVE G F + 5
+20
+
 SHOW A
 150
 
@@ -68,6 +74,12 @@ SHOW D
 
 SHOW E
 5
+
+SHOW F
+15
+
+SHOW G
+20
 
 SAVEA 10
 Invalid Syntax: Expected Keyword, '+', '-' or '('

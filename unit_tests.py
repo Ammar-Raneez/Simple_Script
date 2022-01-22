@@ -55,6 +55,16 @@ class UnitTest(unittest.TestCase):
         returned_val, returned_err = run('<stdin>', 'SAVE A IF 2==5 THEN 2 ELIF 3==5 THEN 3 ELSE 5')
         self.assertEqual('5', str(returned_val))
 
+    def test_n(self):
+        run('<stdin>', 'SAVE A 10+5')
+        returned_val, returned_err = run('<stdin>', f'SAVE B A+5')
+        self.assertEqual('20', str(returned_val))
+
+    def test_o(self):
+        run('<stdin>', 'SAVE A IF 10+5 == 15 THEN 15 ELSE 0')
+        returned_val, returned_err = run('<stdin>', f'SAVE B A+5')
+        self.assertEqual('20', str(returned_val))
+
     def test_error_a(self):
         returned_val, returned_err = run('<stdin>', 'SAVEA 10')
         self.assertEqual(None, returned_val)
@@ -72,6 +82,11 @@ class UnitTest(unittest.TestCase):
 
     def test_error_d(self):
         returned_val, returned_err = run('<stdin>', 'SAVE A 10/0')
+        self.assertEqual(None, returned_val)
+        self.assertIsInstance(returned_err, RTError)
+
+    def test_error_E(self):
+        returned_val, returned_err = run('<stdin>', 'SAVE A 10 + C')
         self.assertEqual(None, returned_val)
         self.assertIsInstance(returned_err, RTError)
 
