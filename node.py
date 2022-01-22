@@ -70,12 +70,12 @@ class VarAssignNode:
         self.pos_end = self.value_node.pos_end
 
 
-# Node that will be used to run scripts
-class RunNode:
-    # var_run_tok -> token to run script
-    # pos_start -> start of simc token
-    # pos_end -> the end of file name
-    def __init__(self, var_run_tok):
-        self.var_run_tok = var_run_tok
-        self.pos_start = self.var_run_tok.pos_start
-        self.pos_end = self.var_run_tok.pos_end
+# Node that will be used to hold if conditions
+class IfNode:
+    # cases -> list of conditions with their expressions
+    # else_case -> if else statement present, will hold it
+    def __init__(self, cases, else_case):
+        self.cases = cases
+        self.else_case = else_case
+        self.pos_start = self.cases[0][0].pos_start
+        self.pos_end = (self.else_case or self.cases[len(self.cases) - 1][0]).pos_end

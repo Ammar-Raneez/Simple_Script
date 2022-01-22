@@ -16,6 +16,10 @@ power             : atom (POW factor)*
 atom              : INT|FLOAT|IDENTIFIER
                   : LPAREN expr RPAREN
 
+if-expr           : KEYWORD:IF expr KEYWORD:THEN expr
+                  : (KEYWORD:ELIF expr KEYWORD:THEN expr)*
+                  : (KEYWORD:ELSE expr)?
+
 variable: SAVE (keyword) variable_letter (IDENTIFIER) atom
 SHOW variable_letter (IDENTIFIER)
 
@@ -30,3 +34,11 @@ SAVE variable (5==5)
 
 5 == 5 AND 6 == 6
 (5 == 5) AND (6 == 6)
+
+Conditions
+if 5 == 5 then "yes" else "something is wrong"
+
+
+Key
+(?) - optional
+(*) - one or many

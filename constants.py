@@ -29,5 +29,9 @@ KEYWORDS = [
     'SAVE',
     'AND',
     'OR',
-    'NOT'
+    'NOT',
+    'IF',
+    'THEN',
+    'ELIF',
+    'ELSE'
 ]
