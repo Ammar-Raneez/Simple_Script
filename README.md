@@ -1,8 +1,14 @@
-## SimpleScript v1.0.0 [![SimpleScript](https://github.com/Ammar-Raneez/Simple_Script/actions/workflows/simplescript.yml/badge.svg)](https://github.com/Ammar-Raneez/Simple_Script/actions/workflows/simplescript.yml)
+## SimpleScript
+
+<hr>
 
 <p align="center">
       <img src="https://raw.githubusercontent.com/Ammar-Raneez/Simple_Script/refs/heads/main/misc/image_2022-01-21_11-25-43_resized.png" />
 </p>
+
+[![SimpleScript](https://github.com/Ammar-Raneez/Simple_Script/actions/workflows/simplescript.yml/badge.svg)](https://github.com/Ammar-Raneez/Simple_Script/actions/workflows/simplescript.yml)
+[![CodeFactor](https://www.codefactor.io/repository/github/ammar-raneez/simple_script/badge)](https://www.codefactor.io/repository/github/ammar-raneez/simple_script)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=Ammar-Raneez_Simple_Script&metric=alert_status)](https://sonarcloud.io/api/project_badges/measure?project=Ammar-Raneez_Simple_Script&metric=alert_status)
 
 SimpleScript is a basic command language that supports saving and accessing of variables, conditional statements, loops, and functions.
 
