@@ -25,6 +25,8 @@ TT_GTE = 'GTE'
 TT_EOF = 'EOF'
 TT_IDENTIFIER = 'IDENTIFIER'
 TT_KEYWORD = 'KEYWORD'
+TT_COMMA = 'COMMA'
+TT_ARROW = 'ARROW'
 KEYWORDS = [
     'SHOW',
     'SAVE',
@@ -38,5 +40,6 @@ KEYWORDS = [
     'FOR',
     'TO',
     'STEP',
-    'WHILE'
+    'WHILE',
+    'FUNC'
 ]

@@ -86,14 +86,62 @@ class Parser:
                 return res
             return res.success(while_expr)
 
+        # handle function definitions
+        elif token.matches(TT_KEYWORD, 'FUNC'):
+            func_def = res.register(self.func_def())
+            if res.error:
+                return res
+            return res.success(func_def)
+
         return res.failure(InvalidSyntaxError(
             token.pos_start, token.pos_end,
-            "Expected int, float, '+', '-' or '('"
+            "Expected int, float, '+', '-', 'identifier', 'IF', 'FOR', 'WHILE', 'FUNC', or '('"
         ))
+
+    # handle function call
+    def call(self):
+        res = ParseResult()
+        atom = res.register(self.atom())
+        if res.error: return res
+
+        if self.current_token.type == TT_LPAREN:
+            res.register_advancement()
+            self.advance()
+            arg_nodes = []
+
+            if self.current_token.type == TT_RPAREN:
+                res.register_advancement()
+                self.advance()
+            else:
+                arg_nodes.append(res.register(self.expr()))
+                if res.error:
+                    return res.failure(InvalidSyntaxError(
+                        self.current_token.pos_start, self.current_token.pos_end,
+                        "Expected ')', 'VAR', 'IF', 'FOR', 'WHILE', 'FUNC', int, float, identifier, '+', '-', '(' or 'NOT'"
+                    ))
+
+                while self.current_token.type == TT_COMMA:
+                    res.register_advancement()
+                    self.advance()
+
+                    arg_nodes.append(res.register(self.expr()))
+                    if res.error: return res
+
+                if self.current_token.type != TT_RPAREN:
+                    return res.failure(InvalidSyntaxError(
+                        self.current_token.pos_start, self.current_token.pos_end,
+                        f"Expected ',' or ')'"
+                    ))
+
+                res.register_advancement()
+                self.advance()
+            return res.success(CallNode(atom, arg_nodes))
+
+        return res.success(atom)
 
     # handle power operation parsing
     def power(self):
-        return self.bin_op(self.atom, (TT_POW,), self.factor)
+        return self.bin_op(self.call, (TT_POW,), self.factor)
 
     # handle factor parsing
     def factor(self):
@@ -277,6 +325,93 @@ class Parser:
 
         return res.success(WhileNode(condition, body))
 
+    # handle function definition parsing
+    def func_def(self):
+        res = ParseResult()
+
+        if not self.current_token.matches(TT_KEYWORD, 'FUNC'):
+            return res.failure(InvalidSyntaxError(
+                self.current_token.pos_start, self.current_token.pos_end,
+                f"Expected 'FUNC'"
+            ))
+
+        res.register_advancement()
+        self.advance()
+
+        # handle cases where function name is provided
+        if self.current_token.type == TT_IDENTIFIER:
+            var_name_tok = self.current_token
+            res.register_advancement()
+            self.advance()
+            if self.current_token.type != TT_LPAREN:
+                return res.failure(InvalidSyntaxError(
+                    self.current_token.pos_start, self.current_token.pos_end,
+                    f"Expected '('"
+                ))
+        else:
+            var_name_tok = None
+            if self.current_token.type != TT_LPAREN:
+                return res.failure(InvalidSyntaxError(
+                    self.current_token.pos_start, self.current_token.pos_end,
+                    f"Expected identifier or '('"
+                ))
+
+        res.register_advancement()
+        self.advance()
+        arg_name_toks = []
+
+        # handle cases where arguments are provided
+        if self.current_token.type == TT_IDENTIFIER:
+            arg_name_toks.append(self.current_token)
+            res.register_advancement()
+            self.advance()
+
+            while self.current_token.type == TT_COMMA:
+                res.register_advancement()
+                self.advance()
+
+                if self.current_token.type != TT_IDENTIFIER:
+                    return res.failure(InvalidSyntaxError(
+                        self.current_token.pos_start, self.current_token.pos_end,
+                        f"Expected identifier"
+                    ))
+
+                arg_name_toks.append(self.current_token)
+                res.register_advancement()
+                self.advance()
+
+            if self.current_token.type != TT_RPAREN:
+                return res.failure(InvalidSyntaxError(
+                    self.current_token.pos_start, self.current_token.pos_end,
+                    f"Expected ',' or ')'"
+                ))
+        else:
+            if self.current_token.type != TT_RPAREN:
+                return res.failure(InvalidSyntaxError(
+                    self.current_token.pos_start, self.current_token.pos_end,
+                    f"Expected identifier or ')'"
+                ))
+
+        res.register_advancement()
+        self.advance()
+
+        if self.current_token.type != TT_ARROW:
+            return res.failure(InvalidSyntaxError(
+                self.current_token.pos_start, self.current_token.pos_end,
+                f"Expected '->'"
+            ))
+
+        res.register_advancement()
+        self.advance()
+        node_to_return = res.register(self.expr())
+        if res.error: return res
+
+        return res.success(FuncDefNode(
+            var_name_tok,
+            arg_name_toks,
+            node_to_return
+        ))
+
     # handle comparison expression parsing
     def comp_expr(self):
         res = ParseResult()
@@ -347,7 +482,7 @@ class Parser:
         if res.error:
             return res.failure(InvalidSyntaxError(
                 self.current_token.pos_start, self.current_token.pos_end,
-                'Expected Keyword, \'+\', \'-\', \'(\', or \'NOT\''
+                'Expected Keyword, \'+\', \'-\', \'(\', \'identifier\', \'IF\', \'FOR\', \'WHILE\', \'FUNC\', or \'NOT\''
             ))
 
         return res.success(node)

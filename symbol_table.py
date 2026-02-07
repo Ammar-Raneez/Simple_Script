@@ -1,6 +1,7 @@
 # Will keep track of all the variables and their values
 class SymbolTable:
-    def __init__(self):
+    def __init__(self, parent=None):
+        self.parent = parent
         self.symbols = {}
 
     def get(self, name):

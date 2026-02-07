@@ -20,7 +20,6 @@ def run(file_name, text):
     ast = parser.parse()
     if ast.error:
         return None, ast.error
-    # return ast.node, None
 
     # Run program
     interpreter = Interpreter()

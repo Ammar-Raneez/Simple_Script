@@ -1,42 +1,36 @@
 from error import RTError
+from value import Value
 
 
 # keep track of the result
-class Number:
+class Number(Value):
     # pos_start -> Position of the start of the number
     # pos_end -> Position of the end of the number
     # value -> the actual value of the number
     def __init__(self, value):
-        self.context = None
-        self.pos_end = None
-        self.pos_start = None
+        super().__init__()
         self.value = value
-        self.set_pos()
-        self.set_context()
-
-    def set_pos(self, pos_start=None, pos_end=None):
-        self.pos_start = pos_start
-        self.pos_end = pos_end
-        return self
-
-    def set_context(self, context=None):
-        self.context = context
-        return self
 
     # add a number - cannot have errors
     def added_to(self, other):
         if isinstance(other, Number):
             return Number(self.value + other.value).set_context(self.context), None
 
+        return None, self.illegal_operation(other)
+
     # subtract by a number - cannot have errors
     def subbed_by(self, other):
         if isinstance(other, Number):
             return Number(self.value - other.value).set_context(self.context), None
 
+        return None, self.illegal_operation(other)
+
     # multiplied by a number - cannot have errors
     def multed_by(self, other):
         if isinstance(other, Number):
             return Number(self.value * other.value).set_context(self.context), None
+
+        return None, self.illegal_operation(other)
 
     # divided by a number - possible to have divided by 0 error
     def dived_by(self, other):
@@ -51,50 +45,70 @@ class Number:
 
             return Number(self.value / other.value).set_context(self.context), None
 
+        return None, self.illegal_operation(other)
+
     # powered by a number
     def powed_by(self, other):
         if isinstance(other, Number):
             return Number(self.value ** other.value).set_context(self.context), None
+
+        return None, self.illegal_operation(other)
 
     # equality comparison to a number
     def get_comparison_eq(self, other):
         if isinstance(other, Number):
             return Number(int(self.value == other.value)).set_context(self.context), None
 
+        return None, self.illegal_operation(other)
+
     # not equal comparison to a number
     def get_comparison_ne(self, other):
         if isinstance(other, Number):
             return Number(int(self.value != other.value)).set_context(self.context), None
+
+        return None, self.illegal_operation(other)
 
     # less than comparison to a number
     def get_comparison_lt(self, other):
         if isinstance(other, Number):
             return Number(int(self.value < other.value)).set_context(self.context), None
 
+        return None, self.illegal_operation(other)
+
     # greater than comparison to a number
     def get_comparison_gt(self, other):
         if isinstance(other, Number):
             return Number(int(self.value > other.value)).set_context(self.context), None
+
+        return None, self.illegal_operation(other)
 
     # less than or equal to comparison to a number
     def get_comparison_lte(self, other):
         if isinstance(other, Number):
             return Number(int(self.value <= other.value)).set_context(self.context), None
 
+        return None, self.illegal_operation(other)
+
     # greater than or equal to comparison to a number
     def get_comparison_gte(self, other):
         if isinstance(other, Number):
             return Number(int(self.value >= other.value)).set_context(self.context), None
+
+        return None, self.illegal_operation(other)
 
     # AND logic with a number
     def anded_by(self, other):
         if isinstance(other, Number):
             return Number(int(self.value and other.value)).set_context(self.context), None
 
+        return None, self.illegal_operation(other)
+
     # OR logic with a number
     def ored_by(self, other):
         if isinstance(other, Number):
             return Number(int(self.value or other.value)).set_context(self.context), None
+
+        return None, self.illegal_operation(other)
 
     # ! logic with the number
     def notted(self):
