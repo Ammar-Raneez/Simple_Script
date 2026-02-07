@@ -46,7 +46,7 @@ class UnaryOpNode:
         return f'({self.op_tok}, {self.node})'
 
 
-# Will hold saved variables
+# Will hold VARd variables
 class VarAccessNode:
     # var_name_tok -> variable name
     # pos_start -> start of SHOW token

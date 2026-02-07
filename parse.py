@@ -439,7 +439,7 @@ class Parser:
         res = ParseResult()
 
         # Variable assignment
-        if self.current_token.matches(TT_KEYWORD, 'SAVE'):
+        if self.current_token.matches(TT_KEYWORD, 'VAR'):
             res.register_advancement()
             self.advance()
 
@@ -455,7 +455,17 @@ class Parser:
             res.register_advancement()
             self.advance()
 
-            # after an identifier an expression is accepted
+            # after an identifier, an equals sign is required
+            if self.current_token.type != TT_EQ:
+                return res.failure(InvalidSyntaxError(
+                    self.current_token.pos_start, self.current_token.pos_end,
+                    "Expected '='"
+                ))
+
+            res.register_advancement()
+            self.advance()
+
+            # after the equals sign, an expression is accepted
             expr = res.register(self.expr())
             if res.error:
                 return res

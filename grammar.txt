@@ -1,4 +1,4 @@
-expr              : KEYWORD:SAVE IDENTIFiER expr
+expr              : KEYWORD:VAR IDENTIFIER EQ expr
                   : comp-expr ((KEYWORD:AND|KEYWORD:OR) comp-expr)*
 
 comp-expr         : NOT comp-expr
@@ -11,7 +11,7 @@ term              : factor ((MUL|DIV) factor)*
 factor            : (PLUS|MINUS) factor
                   : power
 
-power             : atom (POW factor)*
+power             : call (POW factor)*
 
 call			  : atom (LPAREN (expr (COMMA expr)*)? RPAREN)?
 
@@ -35,8 +35,13 @@ func-def		  : KEYWORD:FUNC IDENTIFIER?
 					  LPAREN (IDENTIFIER (COMMA IDENTIFIER)*)? RPAREN
 					  ARROW expr
 
-variable: SAVE (keyword) variable_letter (IDENTIFIER) atom
-SHOW variable_letter (IDENTIFIER)
+# Variable assignment now requires an equals sign
+# Example: VAR x = 10
+# Example: VAR result = 5 + 10 * 2
+# Example: VAR name = IF 5 == 5 THEN "yes" ELSE "no"
+
+# Variable access
+# Example: SHOW x
 
 # The above Grammar is ordered based on priority
 
@@ -44,8 +49,8 @@ SHOW variable_letter (IDENTIFIER)
 Expressions must take priority for logical operations
 5 + 5 == 2 + 8
 (5 + 5) == (2 + 8)
-SAVE variable 5==5
-SAVE variable (5==5)
+VAR variable = 5==5
+VAR variable = (5==5)
 
 5 == 5 AND 6 == 6
 (5 == 5) AND (6 == 6)

@@ -29,7 +29,7 @@ TT_COMMA = 'COMMA'
 TT_ARROW = 'ARROW'
 KEYWORDS = [
     'SHOW',
-    'SAVE',
+    'VAR',
     'AND',
     'OR',
     'NOT',

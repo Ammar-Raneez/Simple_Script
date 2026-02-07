@@ -41,7 +41,7 @@ class Interpreter:
         value = value.copy().set_pos(node.pos_start, node.pos_end)
         return res.success(value)
 
-    # visit var assign (SAVE identifier value)
+    # visit var assign (VAR identifier value)
     def visit_VarAssignNode(self, node, context):
         res = RTResult()
         var_name = node.var_name_tok.value
