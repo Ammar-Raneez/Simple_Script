@@ -345,6 +345,5 @@ pip install -e .
 
 ## Links
 
-- **GitHub**: https://github.com/Ammar-Raneez/Simple_Script
-- **Repl.it**: https://replit.com/@ammarraneez/SimpleScript
-- **Issues**: https://github.com/Ammar-Raneez/Simple_Script/issues
+- **GitHub**: https://github.com/Ammar-Raneez/SimpleScript
+- **Issues**: https://github.com/Ammar-Raneez/SimpleScript/issues
