@@ -1,7 +1,7 @@
 ## SimpleScript v2.0.0
 
 [![SimpleScript](https://github.com/Ammar-Raneez/Simple_Script/actions/workflows/simplescript.yml/badge.svg)](https://github.com/Ammar-Raneez/Simple_Script/actions/workflows/simplescript.yml)
-[![CodeFactor](https://www.codefactor.io/repository/github/ammar-raneez/simple_script/badge)](https://www.codefactor.io/repository/github/ammar-raneez/simple_script)
+[![CodeFactor](https://www.codefactor.io/repository/github/ammar-raneez/simplescript/badge)](https://www.codefactor.io/repository/github/ammar-raneez/simplescript)
 [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=Ammar-Raneez_Simple_Script&metric=alert_status)](https://sonarcloud.io/api/project_badges/measure?project=Ammar-Raneez_Simple_Script&metric=alert_status)
 
 <p align="center">
