@@ -1,0 +1,34 @@
+VAR greeting = "=== SimpleScript Demo ==="
+SHOW greeting
+
+VAR x = 10
+VAR y = 20
+VAR sum = x + y
+SHOW sum
+
+FUNC add(a, b) -> a + b
+VAR result = add(15, 25)
+SHOW result
+
+FUNC square(n) -> n * n
+SHOW square(7)
+
+VAR factorial = 1
+FOR i = 1 TO 6 THEN VAR factorial = factorial * i
+SHOW factorial
+
+FUNC greet(name) -> "Hello, " + name + "!"
+SHOW greet("SimpleScript User")
+
+VAR message = IF 5 > 3 THEN "Math works!" ELSE "Something is wrong"
+SHOW message
+
+VAR counter = 0
+WHILE counter < 3 THEN VAR counter = counter + 1
+SHOW counter
+
+FUNC abs_value(num) -> IF num < 0 THEN -num ELSE num
+SHOW abs_value(-42)
+
+VAR repeated = "Hi! " * 3
+SHOW repeated

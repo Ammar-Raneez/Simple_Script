@@ -1,0 +1,13 @@
+FUNC add(a, b) -> a + b
+FUNC multiply(a, b) -> a * b
+FUNC square(x) -> x * x
+
+add(5, 3)
+multiply(4, 7)
+square(9)
+
+FUNC max(a, b) -> IF a > b THEN a ELSE b
+max(15, 23)
+
+FUNC abs_value(x) -> IF x < 0 THEN -x ELSE x
+abs_value(-42)

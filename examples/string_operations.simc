@@ -1,0 +1,24 @@
+VAR name = "Alice"
+VAR greeting = "Hello, " + name + "!"
+SHOW greeting
+
+VAR repeated = "ha" * 5
+SHOW repeated
+
+VAR multiline = "Line 1\nLine 2\nLine 3"
+SHOW multiline
+
+VAR with_tabs = "Column1\tColumn2\tColumn3"
+SHOW with_tabs
+
+VAR single_quotes = 'She said "hello"'
+SHOW single_quotes
+
+VAR double_quotes = "He said 'hi'"
+SHOW double_quotes
+
+FUNC make_title(text) -> "=== " + text + " ==="
+SHOW make_title("Welcome")
+
+FUNC repeat_greeting(name, times) -> ("Hello " + name + "! ") * times
+SHOW repeat_greeting("Bob", 3)

@@ -1,0 +1,11 @@
+VAR fib = FUNC(n) -> IF n <= 1 THEN n ELSE fib(n - 1) + fib(n - 2)
+
+SHOW fib(0)
+SHOW fib(1)
+SHOW fib(2)
+SHOW fib(3)
+SHOW fib(4)
+SHOW fib(5)
+SHOW fib(6)
+SHOW fib(7)
+SHOW fib(8)

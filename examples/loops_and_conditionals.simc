@@ -1,0 +1,29 @@
+VAR sum = 0
+FOR i = 1 TO 11 THEN VAR sum = sum + i
+SHOW sum
+
+VAR product = 1
+FOR i = 1 TO 6 THEN VAR product = product * i
+SHOW product
+
+VAR evens_sum = 0
+FOR i = 0 TO 11 STEP 2 THEN VAR evens_sum = evens_sum + i
+SHOW evens_sum
+
+VAR countdown = 5
+WHILE countdown > 0 THEN VAR countdown = countdown - 1
+SHOW countdown
+
+FUNC classify(num) -> IF num < 0 THEN "negative" ELIF num == 0 THEN "zero" ELSE "positive"
+
+SHOW classify(-5)
+SHOW classify(0)
+SHOW classify(7)
+
+FUNC max(a, b) -> IF a > b THEN a ELSE b
+SHOW max(10, 20)
+SHOW max(50, 30)
+
+FUNC min(a, b) -> IF a < b THEN a ELSE b
+SHOW min(10, 20)
+SHOW min(50, 30)

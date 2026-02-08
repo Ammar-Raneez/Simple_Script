@@ -1,0 +1,8 @@
+"Hello, World!"
+
+"ha" * 5
+
+"First" + " " + "Last"
+
+VAR name = "Alice"
+"Hello, " + name + "!"
