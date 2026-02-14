@@ -1,0 +1,12 @@
+{}
+
+{"name": "Alice"}
+
+{"name": "Alice", "age": 25}
+
+{"x": 10, "y": 20, "z": 30}
+
+{"title": "Hello", "count": 42, "active": 1}
+
+VAR person = {"name": "Bob", "age": 30}
+person

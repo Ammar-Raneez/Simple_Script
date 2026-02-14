@@ -28,7 +28,7 @@ SimpleScript follows this grammar, ordered by operator precedence
 
     atom        : INT | FLOAT | STRING | IDENTIFIER
                 | LPAREN expr RPAREN
-                | if-expr | for-expr | while-expr | list-expr | func-def
+                | if-expr | for-expr | while-expr | list-expr | map-expr | func-def
 
     if-expr     : KEYWORD:IF expr KEYWORD:THEN expr
                   (KEYWORD:ELIF expr KEYWORD:THEN expr)*
@@ -40,6 +40,8 @@ SimpleScript follows this grammar, ordered by operator precedence
     while-expr  : KEYWORD:WHILE expr KEYWORD:THEN expr
     
     list-expr   : LSQUARE (expr (COMMA expr)*)? RSQUARE
+    
+    map-expr    : LBRACE (expr COLON expr (COMMA expr COLON expr)*)? RBRACE
 
     func-def    : KEYWORD:FUNC IDENTIFIER?
                   LPAREN (IDENTIFIER (COMMA IDENTIFIER)*)? RPAREN
@@ -80,6 +82,16 @@ Ordered collections of values::
     []
     [[1, 2], [3, 4]]
 
+Maps
+~~~~
+
+Key-value dictionaries::
+
+    {"name": "Alice", "age": 25}
+    {"x": 10, "y": 20}
+    {}
+    {"outer": {"inner": 42}}
+
 Operators
 ---------
 
@@ -92,6 +104,8 @@ Logical: ``AND``, ``OR``, ``NOT``
 String: ``+`` (concatenation), ``*`` (repetition)
 
 List: ``+`` (append), ``-`` (remove by index), ``*`` (extend), ``/`` (get by index)
+
+Map: ``+`` (add/update), ``-`` (remove key), ``*`` (merge), ``/`` (get value)
 
 Keywords
 --------

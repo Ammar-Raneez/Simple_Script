@@ -1,0 +1,18 @@
+FUNC make_person(name, age) -> {"name": name, "age": age}
+make_person("Alice", 25)
+
+FUNC get_name(person) -> person / "name"
+VAR person = {"name": "Bob", "age": 30}
+get_name(person)
+
+VAR config = IF 1 == 1 THEN {"mode": "dev"} ELSE {"mode": "prod"}
+config
+
+VAR data = {"nums": [1, 2, 3], "text": "hello"}
+data
+
+VAR nested = {"outer": {"inner": 42}}
+nested
+
+VAR result = nested / "outer"
+result

@@ -29,8 +29,9 @@ class Error:
         details (str): Detailed description of the error.
     """
 
-    def __init__(self, pos_start: Position, pos_end: Position,
-                 error_name: str, details: str) -> None:
+    def __init__(
+        self, pos_start: Position, pos_end: Position, error_name: str, details: str
+    ) -> None:
         self.pos_start = pos_start
         self.pos_end = pos_end
         self.error_name = error_name
@@ -43,9 +44,9 @@ class Error:
             A formatted error message including the error name, details,
             file location, and a visual pointer to the error.
         """
-        result = f'{self.error_name}: {self.details}\n'
-        result += f'File {self.pos_start.fName}, line {self.pos_start.lnNumber + 1}'
-        result += '\n\n' + string_with_arrows(
+        result = f"{self.error_name}: {self.details}\n"
+        result += f"File {self.pos_start.fName}, line {self.pos_start.lnNumber + 1}"
+        result += "\n\n" + string_with_arrows(
             self.pos_start.fText, self.pos_start, self.pos_end
         )
         return result
@@ -60,9 +61,8 @@ class IllegalCharError(Error):
         details: Description of the illegal character.
     """
 
-    def __init__(self, pos_start: Position, pos_end: Position,
-                 details: str) -> None:
-        super().__init__(pos_start, pos_end, 'Illegal Character', details)
+    def __init__(self, pos_start: Position, pos_end: Position, details: str) -> None:
+        super().__init__(pos_start, pos_end, "Illegal Character", details)
 
 
 class ExpectedCharError(Error):
@@ -74,9 +74,8 @@ class ExpectedCharError(Error):
         details: Description of the expected character.
     """
 
-    def __init__(self, pos_start: Position, pos_end: Position,
-                 details: str) -> None:
-        super().__init__(pos_start, pos_end, 'Expected Character', details)
+    def __init__(self, pos_start: Position, pos_end: Position, details: str) -> None:
+        super().__init__(pos_start, pos_end, "Expected Character", details)
 
 
 class InvalidSyntaxError(Error):
@@ -88,9 +87,10 @@ class InvalidSyntaxError(Error):
         details: Description of the syntax error.
     """
 
-    def __init__(self, pos_start: Position, pos_end: Position,
-                 details: str = '') -> None:
-        super().__init__(pos_start, pos_end, 'Invalid Syntax', details)
+    def __init__(
+        self, pos_start: Position, pos_end: Position, details: str = ""
+    ) -> None:
+        super().__init__(pos_start, pos_end, "Invalid Syntax", details)
 
 
 class RTError(Error):
@@ -109,9 +109,10 @@ class RTError(Error):
         context (Context): The execution context for traceback generation.
     """
 
-    def __init__(self, pos_start: Position, pos_end: Position,
-                 details: str, context: Context) -> None:
-        super().__init__(pos_start, pos_end, 'Runtime Error', details)
+    def __init__(
+        self, pos_start: Position, pos_end: Position, details: str, context: Context
+    ) -> None:
+        super().__init__(pos_start, pos_end, "Runtime Error", details)
         self.context = context
 
     def as_string(self) -> str:
@@ -122,8 +123,8 @@ class RTError(Error):
             details, and a visual pointer to the error location.
         """
         result = self.generate_traceback()
-        result += f'{self.error_name}: {self.details}'
-        result += '\n\n' + string_with_arrows(
+        result += f"{self.error_name}: {self.details}"
+        result += "\n\n" + string_with_arrows(
             self.pos_start.fText, self.pos_start, self.pos_end
         )
         return result
@@ -137,16 +138,16 @@ class RTError(Error):
         Returns:
             A formatted traceback string.
         """
-        result = ''
+        result = ""
         pos = self.pos_start
         ctx = self.context
 
         while ctx:
             result = (
-                f'  File {pos.fName}, line {str(pos.lnNumber + 1)}, '
-                f'in {ctx.display_name}\n'
+                f"  File {pos.fName}, line {str(pos.lnNumber + 1)}, "
+                f"in {ctx.display_name}\n"
             ) + result
             pos = ctx.parent_entry_pos
             ctx = ctx.parent
 
-        return 'Traceback (most recent call last):\n' + result
+        return "Traceback (most recent call last):\n" + result

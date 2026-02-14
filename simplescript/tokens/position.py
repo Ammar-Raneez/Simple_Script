@@ -29,15 +29,16 @@ class Position:
         fText (str): Full source text content.
     """
 
-    def __init__(self, index: int, ln_number: int, col_number: int,
-                 f_name: str, f_text: str) -> None:
+    def __init__(
+        self, index: int, ln_number: int, col_number: int, f_name: str, f_text: str
+    ) -> None:
         self.index = index
         self.lnNumber = ln_number
         self.colNumber = col_number
         self.fName = f_name
         self.fText = f_text
 
-    def advance(self, current_char: Optional[str] = None) -> 'Position':
+    def advance(self, current_char: Optional[str] = None) -> "Position":
         """Advance the position by one character.
 
         Increments the index and column number. If the current character
@@ -53,16 +54,17 @@ class Position:
         self.index += 1
         self.colNumber += 1
 
-        if current_char == '\n':
+        if current_char == "\n":
             self.lnNumber += 1
             self.colNumber = 0
         return self
 
-    def copy(self) -> 'Position':
+    def copy(self) -> "Position":
         """Create a copy of this position.
 
         Returns:
             A new Position instance with the same values.
         """
-        return Position(self.index, self.lnNumber, self.colNumber,
-                        self.fName, self.fText)
+        return Position(
+            self.index, self.lnNumber, self.colNumber, self.fName, self.fText
+        )

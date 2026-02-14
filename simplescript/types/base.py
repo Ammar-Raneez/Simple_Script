@@ -27,7 +27,7 @@ class Value:
         self.set_pos()
         self.set_context()
 
-    def set_pos(self, pos_start=None, pos_end=None) -> 'Value':
+    def set_pos(self, pos_start=None, pos_end=None) -> "Value":
         """Set the source position of this value.
 
         Args:
@@ -41,7 +41,7 @@ class Value:
         self.pos_end = pos_end
         return self
 
-    def set_context(self, context=None) -> 'Value':
+    def set_context(self, context=None) -> "Value":
         """Set the execution context of this value.
 
         Args:
@@ -53,7 +53,7 @@ class Value:
         self.context = context
         return self
 
-    def added_to(self, other: 'Value') -> Tuple[Optional['Value'], Optional[RTError]]:
+    def added_to(self, other: "Value") -> Tuple[Optional["Value"], Optional[RTError]]:
         """Perform addition with another value.
 
         Args:
@@ -64,7 +64,7 @@ class Value:
         """
         return None, self.illegal_operation(other)
 
-    def subbed_by(self, other: 'Value') -> Tuple[Optional['Value'], Optional[RTError]]:
+    def subbed_by(self, other: "Value") -> Tuple[Optional["Value"], Optional[RTError]]:
         """Perform subtraction with another value.
 
         Args:
@@ -75,7 +75,7 @@ class Value:
         """
         return None, self.illegal_operation(other)
 
-    def multed_by(self, other: 'Value') -> Tuple[Optional['Value'], Optional[RTError]]:
+    def multed_by(self, other: "Value") -> Tuple[Optional["Value"], Optional[RTError]]:
         """Perform multiplication with another value.
 
         Args:
@@ -86,7 +86,7 @@ class Value:
         """
         return None, self.illegal_operation(other)
 
-    def dived_by(self, other: 'Value') -> Tuple[Optional['Value'], Optional[RTError]]:
+    def dived_by(self, other: "Value") -> Tuple[Optional["Value"], Optional[RTError]]:
         """Perform division with another value.
 
         Args:
@@ -97,7 +97,7 @@ class Value:
         """
         return None, self.illegal_operation(other)
 
-    def powed_by(self, other: 'Value') -> Tuple[Optional['Value'], Optional[RTError]]:
+    def powed_by(self, other: "Value") -> Tuple[Optional["Value"], Optional[RTError]]:
         """Perform exponentiation with another value.
 
         Args:
@@ -108,7 +108,9 @@ class Value:
         """
         return None, self.illegal_operation(other)
 
-    def get_comparison_eq(self, other: 'Value') -> Tuple[Optional['Value'], Optional[RTError]]:
+    def get_comparison_eq(
+        self, other: "Value"
+    ) -> Tuple[Optional["Value"], Optional[RTError]]:
         """Perform equality comparison.
 
         Args:
@@ -119,7 +121,9 @@ class Value:
         """
         return None, self.illegal_operation(other)
 
-    def get_comparison_ne(self, other: 'Value') -> Tuple[Optional['Value'], Optional[RTError]]:
+    def get_comparison_ne(
+        self, other: "Value"
+    ) -> Tuple[Optional["Value"], Optional[RTError]]:
         """Perform not-equal comparison.
 
         Args:
@@ -130,7 +134,9 @@ class Value:
         """
         return None, self.illegal_operation(other)
 
-    def get_comparison_lt(self, other: 'Value') -> Tuple[Optional['Value'], Optional[RTError]]:
+    def get_comparison_lt(
+        self, other: "Value"
+    ) -> Tuple[Optional["Value"], Optional[RTError]]:
         """Perform less-than comparison.
 
         Args:
@@ -141,7 +147,9 @@ class Value:
         """
         return None, self.illegal_operation(other)
 
-    def get_comparison_gt(self, other: 'Value') -> Tuple[Optional['Value'], Optional[RTError]]:
+    def get_comparison_gt(
+        self, other: "Value"
+    ) -> Tuple[Optional["Value"], Optional[RTError]]:
         """Perform greater-than comparison.
 
         Args:
@@ -152,7 +160,9 @@ class Value:
         """
         return None, self.illegal_operation(other)
 
-    def get_comparison_lte(self, other: 'Value') -> Tuple[Optional['Value'], Optional[RTError]]:
+    def get_comparison_lte(
+        self, other: "Value"
+    ) -> Tuple[Optional["Value"], Optional[RTError]]:
         """Perform less-than-or-equal comparison.
 
         Args:
@@ -163,7 +173,9 @@ class Value:
         """
         return None, self.illegal_operation(other)
 
-    def get_comparison_gte(self, other: 'Value') -> Tuple[Optional['Value'], Optional[RTError]]:
+    def get_comparison_gte(
+        self, other: "Value"
+    ) -> Tuple[Optional["Value"], Optional[RTError]]:
         """Perform greater-than-or-equal comparison.
 
         Args:
@@ -174,7 +186,7 @@ class Value:
         """
         return None, self.illegal_operation(other)
 
-    def anded_by(self, other: 'Value') -> Tuple[Optional['Value'], Optional[RTError]]:
+    def anded_by(self, other: "Value") -> Tuple[Optional["Value"], Optional[RTError]]:
         """Perform logical AND with another value.
 
         Args:
@@ -185,7 +197,7 @@ class Value:
         """
         return None, self.illegal_operation(other)
 
-    def ored_by(self, other: 'Value') -> Tuple[Optional['Value'], Optional[RTError]]:
+    def ored_by(self, other: "Value") -> Tuple[Optional["Value"], Optional[RTError]]:
         """Perform logical OR with another value.
 
         Args:
@@ -196,7 +208,9 @@ class Value:
         """
         return None, self.illegal_operation(other)
 
-    def notted(self, other: 'Value' = None) -> Tuple[Optional['Value'], Optional[RTError]]:
+    def notted(
+        self, other: "Value" = None
+    ) -> Tuple[Optional["Value"], Optional[RTError]]:
         """Perform logical NOT.
 
         Args:
@@ -218,7 +232,7 @@ class Value:
         """
         return RTResult().failure(self.illegal_operation())
 
-    def copy(self) -> 'Value':
+    def copy(self) -> "Value":
         """Create a copy of this value.
 
         Returns:
@@ -227,7 +241,7 @@ class Value:
         Raises:
             Exception: If the subclass does not implement copy.
         """
-        raise Exception('No copy method defined')
+        raise Exception("No copy method defined")
 
     def is_true(self) -> bool:
         """Check if this value is truthy.
@@ -237,7 +251,7 @@ class Value:
         """
         return False
 
-    def illegal_operation(self, other: Optional['Value'] = None) -> RTError:
+    def illegal_operation(self, other: Optional["Value"] = None) -> RTError:
         """Create an illegal operation error.
 
         Args:
@@ -249,8 +263,4 @@ class Value:
         if not other:
             other = self
 
-        return RTError(
-            self.pos_start, other.pos_end,
-            'Illegal operation',
-            self.context
-        )
+        return RTError(self.pos_start, other.pos_end, "Illegal operation", self.context)

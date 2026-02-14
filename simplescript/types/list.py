@@ -21,7 +21,7 @@ class List(Value):
         super().__init__()
         self.elements = elements
 
-    def added_to(self, other: Value) -> Tuple[Optional['List'], Optional[RTError]]:
+    def added_to(self, other: Value) -> Tuple[Optional["List"], Optional[RTError]]:
         """Append another value to this list.
 
         Args:
@@ -34,7 +34,7 @@ class List(Value):
         new_list.elements.append(other)
         return new_list, None
 
-    def subbed_by(self, other: Value) -> Tuple[Optional['List'], Optional[RTError]]:
+    def subbed_by(self, other: Value) -> Tuple[Optional["List"], Optional[RTError]]:
         """Remove an element from this list by index.
 
         Args:
@@ -58,7 +58,7 @@ class List(Value):
         else:
             return None, Value.illegal_operation(self, other)
 
-    def multed_by(self, other: Value) -> Tuple[Optional['List'], Optional[RTError]]:
+    def multed_by(self, other: Value) -> Tuple[Optional["List"], Optional[RTError]]:
         """Extend this list with another list.
 
         Args:
@@ -74,7 +74,7 @@ class List(Value):
         else:
             return None, Value.illegal_operation(self, other)
 
-    def dived_by(self, other: Value) -> Tuple[Optional['List'], Optional[RTError]]:
+    def dived_by(self, other: Value) -> Tuple[Optional["List"], Optional[RTError]]:
         """Retrieve an element from this list by index.
 
         Args:

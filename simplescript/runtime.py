@@ -52,7 +52,7 @@ def run(file_name: str, text: str) -> Tuple[Optional[Any], Optional[Error]]:
 
     # Interpret
     interpreter = Interpreter()
-    context = Context('<simplescript>')
+    context = Context("<simplescript>")
     context.symbol_table = global_symbol_table
     result = interpreter.visit(ast.node, context)
 

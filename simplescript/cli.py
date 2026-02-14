@@ -15,20 +15,20 @@ def repl() -> None:
     Continuously reads input from the user, evaluates it, and prints
     the result or error. Exit with Ctrl+C or Ctrl+D.
     """
-    print(f'SimpleScript v{__version__} - Interactive REPL')
-    print('Type your expressions below. Press Ctrl+C to exit.\n')
+    print(f"SimpleScript v{__version__} - Interactive REPL")
+    print("Type your expressions below. Press Ctrl+C to exit.\n")
 
     while True:
         try:
-            text = input('simplescript > ')
+            text = input("simplescript > ")
         except (EOFError, KeyboardInterrupt):
-            print('\nGoodbye!')
+            print("\nGoodbye!")
             break
 
         if not text.strip():
             continue
 
-        result, error = simplescript.run('<stdin>', text)
+        result, error = simplescript.run("<stdin>", text)
         if error:
             print(error.as_string())
         elif result:
@@ -44,7 +44,7 @@ def run_file(file_path: str) -> None:
         file_path: Path to the .simc file to execute.
     """
     try:
-        with open(file_path, 'r') as f:
+        with open(file_path, "r") as f:
             lines = f.readlines()
     except FileNotFoundError:
         print(f"Error: File '{file_path}' not found.")
@@ -74,20 +74,20 @@ def main() -> None:
     """
     if len(sys.argv) == 1:
         repl()
-    elif sys.argv[1] in ('--version', '-v'):
-        print(f'SimpleScript v{__version__}')
-    elif sys.argv[1] in ('--help', '-h'):
-        print('Usage: simplescript [options] [file]')
+    elif sys.argv[1] in ("--version", "-v"):
+        print(f"SimpleScript v{__version__}")
+    elif sys.argv[1] in ("--help", "-h"):
+        print("Usage: simplescript [options] [file]")
         print()
-        print('Options:')
-        print('  -h, --help     Show this help message')
-        print('  -v, --version  Show version information')
+        print("Options:")
+        print("  -h, --help     Show this help message")
+        print("  -v, --version  Show version information")
         print()
-        print('If no file is provided, starts the interactive REPL.')
-        print('Supported file extension: .simc')
+        print("If no file is provided, starts the interactive REPL.")
+        print("Supported file extension: .simc")
     else:
         run_file(sys.argv[1])
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

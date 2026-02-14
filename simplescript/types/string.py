@@ -25,7 +25,7 @@ class String(Value):
         super().__init__()
         self.value = value
 
-    def added_to(self, other: Value) -> Tuple[Optional['String'], Optional[Exception]]:
+    def added_to(self, other: Value) -> Tuple[Optional["String"], Optional[Exception]]:
         """Concatenate another string to this one.
 
         Args:
@@ -40,7 +40,7 @@ class String(Value):
         else:
             return None, Value.illegal_operation(self, other)
 
-    def multed_by(self, other: Value) -> Tuple[Optional['String'], Optional[Exception]]:
+    def multed_by(self, other: Value) -> Tuple[Optional["String"], Optional[Exception]]:
         """Repeat this string a given number of times.
 
         Args:
@@ -51,6 +51,7 @@ class String(Value):
             if the other value is not a number.
         """
         from simplescript.types.number import Number
+
         if isinstance(other, Number):
             return String(self.value * other.value).set_context(self.context), None
         else:
@@ -64,7 +65,7 @@ class String(Value):
         """
         return len(self.value) > 0
 
-    def copy(self) -> 'String':
+    def copy(self) -> "String":
         """Create a copy of this String.
 
         Returns:

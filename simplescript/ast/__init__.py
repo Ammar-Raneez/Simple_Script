@@ -15,15 +15,15 @@ from simplescript.ast.nodes import (
 )
 
 __all__ = [
-    'NumberNode',
-    'StringNode',
-    'BinOpNode',
-    'UnaryOpNode',
-    'VarAccessNode',
-    'VarAssignNode',
-    'IfNode',
-    'ForNode',
-    'WhileNode',
-    'FuncDefNode',
-    'CallNode',
+    "NumberNode",
+    "StringNode",
+    "BinOpNode",
+    "UnaryOpNode",
+    "VarAccessNode",
+    "VarAssignNode",
+    "IfNode",
+    "ForNode",
+    "WhileNode",
+    "FuncDefNode",
+    "CallNode",
 ]

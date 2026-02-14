@@ -1,4 +1,4 @@
-## SimpleScript v2.0.0
+## SimpleScript v2.1.0
 
 [![SimpleScript](https://github.com/Ammar-Raneez/Simple_Script/actions/workflows/simplescript.yml/badge.svg)](https://github.com/Ammar-Raneez/Simple_Script/actions/workflows/simplescript.yml)
 [![CodeFactor](https://www.codefactor.io/repository/github/ammar-raneez/simplescript/badge)](https://www.codefactor.io/repository/github/ammar-raneez/simplescript)
@@ -113,6 +113,7 @@ print(result)  # 30
 * Arithmetic expressions with operator precedence
 * String type with single/double quotes and escape sequences
 * List data structure with indexing and operations
+* Map (dictionary) data structure with key-value operations
 * Named and anonymous function definitions
 * Conditional expressions (IF/ELIF/ELSE)
 * For and While loops
@@ -180,6 +181,15 @@ list * other_list          # Extend list with another list
 list / index               # Get element at index
 ```
 
+### Maps
+```
+{"key": value, ...}        # Map literal
+map / "key"                # Get value by key
+map + {"key": value}       # Add or update key-value pair
+map - "key"                # Remove key
+map1 * map2                # Merge two maps
+```
+
 ## Examples
 
 ### Variables
@@ -245,6 +255,20 @@ simplescript > [10, 20, 30] - 1
 [10, 30]
 simplescript > [1, 2] * [3, 4]
 [1, 2, 3, 4]
+```
+
+### Maps
+```
+simplescript > VAR person = {"name": "Alice", "age": 25}
+{"name": "Alice", "age": 25}
+simplescript > person / "name"
+"Alice"
+simplescript > person + {"city": "NYC"}
+{"name": "Alice", "age": 25, "city": "NYC"}
+simplescript > person - "age"
+{"name": "Alice"}
+simplescript > {"a": 1} * {"b": 2}
+{"a": 1, "b": 2}
 ```
 
 ### Errors

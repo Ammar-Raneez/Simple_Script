@@ -21,7 +21,7 @@ class SymbolTable:
         symbols (dict): Dictionary mapping names to their values.
     """
 
-    def __init__(self, parent: Optional['SymbolTable'] = None) -> None:
+    def __init__(self, parent: Optional["SymbolTable"] = None) -> None:
         self.parent = parent
         self.symbols: dict[str, Any] = {}
 

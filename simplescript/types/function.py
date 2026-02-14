@@ -30,8 +30,7 @@ class Function(Value):
         arg_names (list[str]): Parameter name strings.
     """
 
-    def __init__(self, name: Optional[str], body_node,
-                 arg_names: List[str]) -> None:
+    def __init__(self, name: Optional[str], body_node, arg_names: List[str]) -> None:
         super().__init__()
         self.name = name or "<anonymous>"
         self.body_node = body_node
@@ -91,7 +90,7 @@ class Function(Value):
             return res
         return res.success(value)
 
-    def copy(self) -> 'Function':
+    def copy(self) -> "Function":
         """Create a copy of this Function.
 
         Returns:

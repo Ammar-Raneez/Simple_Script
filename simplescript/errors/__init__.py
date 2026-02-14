@@ -9,9 +9,9 @@ from simplescript.errors.errors import (
 )
 
 __all__ = [
-    'Error',
-    'IllegalCharError',
-    'ExpectedCharError',
-    'InvalidSyntaxError',
-    'RTError',
+    "Error",
+    "IllegalCharError",
+    "ExpectedCharError",
+    "InvalidSyntaxError",
+    "RTError",
 ]

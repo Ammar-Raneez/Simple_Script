@@ -28,9 +28,12 @@ class Context:
         symbol_table (Optional[SymbolTable]): Variable symbol table for this scope.
     """
 
-    def __init__(self, display_name: str,
-                 parent: Optional['Context'] = None,
-                 parent_entry_pos: Optional[Position] = None) -> None:
+    def __init__(
+        self,
+        display_name: str,
+        parent: Optional["Context"] = None,
+        parent_entry_pos: Optional[Position] = None,
+    ) -> None:
         self.display_name = display_name
         self.parent = parent
         self.parent_entry_pos = parent_entry_pos

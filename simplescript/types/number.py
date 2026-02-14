@@ -27,7 +27,7 @@ class Number(Value):
         super().__init__()
         self.value = value
 
-    def added_to(self, other: Value) -> Tuple[Optional['Number'], Optional[RTError]]:
+    def added_to(self, other: Value) -> Tuple[Optional["Number"], Optional[RTError]]:
         """Add another number to this one.
 
         Args:
@@ -40,7 +40,7 @@ class Number(Value):
             return Number(self.value + other.value).set_context(self.context), None
         return None, self.illegal_operation(other)
 
-    def subbed_by(self, other: Value) -> Tuple[Optional['Number'], Optional[RTError]]:
+    def subbed_by(self, other: Value) -> Tuple[Optional["Number"], Optional[RTError]]:
         """Subtract another number from this one.
 
         Args:
@@ -53,7 +53,7 @@ class Number(Value):
             return Number(self.value - other.value).set_context(self.context), None
         return None, self.illegal_operation(other)
 
-    def multed_by(self, other: Value) -> Tuple[Optional['Number'], Optional[RTError]]:
+    def multed_by(self, other: Value) -> Tuple[Optional["Number"], Optional[RTError]]:
         """Multiply this number by another.
 
         Args:
@@ -66,7 +66,7 @@ class Number(Value):
             return Number(self.value * other.value).set_context(self.context), None
         return None, self.illegal_operation(other)
 
-    def dived_by(self, other: Value) -> Tuple[Optional['Number'], Optional[RTError]]:
+    def dived_by(self, other: Value) -> Tuple[Optional["Number"], Optional[RTError]]:
         """Divide this number by another.
 
         Args:
@@ -79,14 +79,12 @@ class Number(Value):
         if isinstance(other, Number):
             if other.value == 0:
                 return None, RTError(
-                    other.pos_start, other.pos_end,
-                    'Division by zero',
-                    self.context
+                    other.pos_start, other.pos_end, "Division by zero", self.context
                 )
             return Number(self.value / other.value).set_context(self.context), None
         return None, self.illegal_operation(other)
 
-    def powed_by(self, other: Value) -> Tuple[Optional['Number'], Optional[RTError]]:
+    def powed_by(self, other: Value) -> Tuple[Optional["Number"], Optional[RTError]]:
         """Raise this number to the power of another.
 
         Args:
@@ -96,10 +94,12 @@ class Number(Value):
             A tuple of (result Number, None) on success, or (None, error).
         """
         if isinstance(other, Number):
-            return Number(self.value ** other.value).set_context(self.context), None
+            return Number(self.value**other.value).set_context(self.context), None
         return None, self.illegal_operation(other)
 
-    def get_comparison_eq(self, other: Value) -> Tuple[Optional['Number'], Optional[RTError]]:
+    def get_comparison_eq(
+        self, other: Value
+    ) -> Tuple[Optional["Number"], Optional[RTError]]:
         """Check equality with another number.
 
         Args:
@@ -109,10 +109,15 @@ class Number(Value):
             Number(1) if equal, Number(0) otherwise.
         """
         if isinstance(other, Number):
-            return Number(int(self.value == other.value)).set_context(self.context), None
+            return (
+                Number(int(self.value == other.value)).set_context(self.context),
+                None,
+            )
         return None, self.illegal_operation(other)
 
-    def get_comparison_ne(self, other: Value) -> Tuple[Optional['Number'], Optional[RTError]]:
+    def get_comparison_ne(
+        self, other: Value
+    ) -> Tuple[Optional["Number"], Optional[RTError]]:
         """Check inequality with another number.
 
         Args:
@@ -122,10 +127,15 @@ class Number(Value):
             Number(1) if not equal, Number(0) otherwise.
         """
         if isinstance(other, Number):
-            return Number(int(self.value != other.value)).set_context(self.context), None
+            return (
+                Number(int(self.value != other.value)).set_context(self.context),
+                None,
+            )
         return None, self.illegal_operation(other)
 
-    def get_comparison_lt(self, other: Value) -> Tuple[Optional['Number'], Optional[RTError]]:
+    def get_comparison_lt(
+        self, other: Value
+    ) -> Tuple[Optional["Number"], Optional[RTError]]:
         """Check if this number is less than another.
 
         Args:
@@ -138,7 +148,9 @@ class Number(Value):
             return Number(int(self.value < other.value)).set_context(self.context), None
         return None, self.illegal_operation(other)
 
-    def get_comparison_gt(self, other: Value) -> Tuple[Optional['Number'], Optional[RTError]]:
+    def get_comparison_gt(
+        self, other: Value
+    ) -> Tuple[Optional["Number"], Optional[RTError]]:
         """Check if this number is greater than another.
 
         Args:
@@ -151,7 +163,9 @@ class Number(Value):
             return Number(int(self.value > other.value)).set_context(self.context), None
         return None, self.illegal_operation(other)
 
-    def get_comparison_lte(self, other: Value) -> Tuple[Optional['Number'], Optional[RTError]]:
+    def get_comparison_lte(
+        self, other: Value
+    ) -> Tuple[Optional["Number"], Optional[RTError]]:
         """Check if this number is less than or equal to another.
 
         Args:
@@ -161,10 +175,15 @@ class Number(Value):
             Number(1) if less than or equal, Number(0) otherwise.
         """
         if isinstance(other, Number):
-            return Number(int(self.value <= other.value)).set_context(self.context), None
+            return (
+                Number(int(self.value <= other.value)).set_context(self.context),
+                None,
+            )
         return None, self.illegal_operation(other)
 
-    def get_comparison_gte(self, other: Value) -> Tuple[Optional['Number'], Optional[RTError]]:
+    def get_comparison_gte(
+        self, other: Value
+    ) -> Tuple[Optional["Number"], Optional[RTError]]:
         """Check if this number is greater than or equal to another.
 
         Args:
@@ -174,10 +193,13 @@ class Number(Value):
             Number(1) if greater than or equal, Number(0) otherwise.
         """
         if isinstance(other, Number):
-            return Number(int(self.value >= other.value)).set_context(self.context), None
+            return (
+                Number(int(self.value >= other.value)).set_context(self.context),
+                None,
+            )
         return None, self.illegal_operation(other)
 
-    def anded_by(self, other: Value) -> Tuple[Optional['Number'], Optional[RTError]]:
+    def anded_by(self, other: Value) -> Tuple[Optional["Number"], Optional[RTError]]:
         """Perform logical AND with another number.
 
         Args:
@@ -187,10 +209,13 @@ class Number(Value):
             Number(1) if both are truthy, Number(0) otherwise.
         """
         if isinstance(other, Number):
-            return Number(int(self.value and other.value)).set_context(self.context), None
+            return (
+                Number(int(self.value and other.value)).set_context(self.context),
+                None,
+            )
         return None, self.illegal_operation(other)
 
-    def ored_by(self, other: Value) -> Tuple[Optional['Number'], Optional[RTError]]:
+    def ored_by(self, other: Value) -> Tuple[Optional["Number"], Optional[RTError]]:
         """Perform logical OR with another number.
 
         Args:
@@ -200,10 +225,13 @@ class Number(Value):
             Number(1) if either is truthy, Number(0) otherwise.
         """
         if isinstance(other, Number):
-            return Number(int(self.value or other.value)).set_context(self.context), None
+            return (
+                Number(int(self.value or other.value)).set_context(self.context),
+                None,
+            )
         return None, self.illegal_operation(other)
 
-    def notted(self) -> Tuple['Number', None]:
+    def notted(self) -> Tuple["Number", None]:
         """Perform logical NOT on this number.
 
         Returns:
@@ -219,7 +247,7 @@ class Number(Value):
         """
         return self.value != 0
 
-    def copy(self) -> 'Number':
+    def copy(self) -> "Number":
         """Create a copy of this Number.
 
         Returns:

@@ -27,7 +27,7 @@ class ParseResult:
         """Record that a token has been consumed."""
         self.advance_count += 1
 
-    def register(self, res: 'ParseResult'):
+    def register(self, res: "ParseResult"):
         """Register the result of a sub-parse operation.
 
         Absorbs the advance count and any error from the sub-result,
@@ -44,7 +44,7 @@ class ParseResult:
             self.error = res.error
         return res.node
 
-    def success(self, node) -> 'ParseResult':
+    def success(self, node) -> "ParseResult":
         """Mark this parse result as successful.
 
         Args:
@@ -56,7 +56,7 @@ class ParseResult:
         self.node = node
         return self
 
-    def failure(self, error) -> 'ParseResult':
+    def failure(self, error) -> "ParseResult":
         """Mark this parse result as failed.
 
         Only overwrites the existing error if no tokens have been consumed

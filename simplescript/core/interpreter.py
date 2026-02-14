@@ -5,10 +5,20 @@ Syntax Tree (AST) produced by the parser, producing runtime values.
 """
 
 from simplescript.types.list import List
+from simplescript.types.map import Map
 from simplescript.utils.rt_result import RTResult
 from simplescript.core.constants import (
-    TT_PLUS, TT_MINUS, TT_MUL, TT_DIV, TT_POW,
-    TT_EE, TT_NE, TT_LT, TT_GT, TT_LTE, TT_GTE,
+    TT_PLUS,
+    TT_MINUS,
+    TT_MUL,
+    TT_DIV,
+    TT_POW,
+    TT_EE,
+    TT_NE,
+    TT_LT,
+    TT_GT,
+    TT_LTE,
+    TT_GTE,
     TT_KEYWORD,
 )
 from simplescript.types.number import Number
@@ -44,7 +54,7 @@ class Interpreter:
         Raises:
             Exception: If no visitor method is defined for the node type.
         """
-        method_name = f'visit_{type(node).__name__}'
+        method_name = f"visit_{type(node).__name__}"
         method = getattr(self, method_name, self.no_visit_method)
         return method(node, context)
 
@@ -58,7 +68,7 @@ class Interpreter:
         Raises:
             Exception: Always, indicating the missing visitor method.
         """
-        raise Exception(f'No visit_{type(node).__name__} method defined')
+        raise Exception(f"No visit_{type(node).__name__} method defined")
 
     def visit_NumberNode(self, node, context: Context) -> RTResult:
         """Evaluate a numeric literal node.
@@ -71,9 +81,9 @@ class Interpreter:
             An RTResult containing the Number value.
         """
         return RTResult().success(
-            Number(node.tok.value).set_context(context).set_pos(
-                node.pos_start, node.pos_end
-            )
+            Number(node.tok.value)
+            .set_context(context)
+            .set_pos(node.pos_start, node.pos_end)
         )
 
     def visit_StringNode(self, node, context: Context) -> RTResult:
@@ -87,9 +97,9 @@ class Interpreter:
             An RTResult containing the String value.
         """
         return RTResult().success(
-            String(node.tok.value).set_context(context).set_pos(
-                node.pos_start, node.pos_end
-            )
+            String(node.tok.value)
+            .set_context(context)
+            .set_pos(node.pos_start, node.pos_end)
         )
 
     def visit_VarAccessNode(self, node, context: Context) -> RTResult:
@@ -108,11 +118,14 @@ class Interpreter:
         value = context.symbol_table.get(var_name)
 
         if not value:
-            return res.failure(RTError(
-                node.pos_start, node.pos_end,
-                f"'{var_name}' is not defined",
-                context
-            ))
+            return res.failure(
+                RTError(
+                    node.pos_start,
+                    node.pos_end,
+                    f"'{var_name}' is not defined",
+                    context,
+                )
+            )
 
         value = value.copy().set_pos(node.pos_start, node.pos_end)
         return res.success(value)
@@ -181,9 +194,9 @@ class Interpreter:
             result, error = left.get_comparison_lte(right)
         elif node.op_tok.type == TT_GTE:
             result, error = left.get_comparison_gte(right)
-        elif node.op_tok.matches(TT_KEYWORD, 'AND'):
+        elif node.op_tok.matches(TT_KEYWORD, "AND"):
             result, error = left.anded_by(right)
-        elif node.op_tok.matches(TT_KEYWORD, 'OR'):
+        elif node.op_tok.matches(TT_KEYWORD, "OR"):
             result, error = left.ored_by(right)
 
         if error:
@@ -209,7 +222,7 @@ class Interpreter:
         error = None
         if node.op_tok.type == TT_MINUS:
             number, error = number.multed_by(Number(-1))
-        elif node.op_tok.type.matches(TT_KEYWORD, 'NOT'):
+        elif node.op_tok.type.matches(TT_KEYWORD, "NOT"):
             number, error = number.notted()
 
         if error:
@@ -280,9 +293,12 @@ class Interpreter:
         i = start_value.value
 
         if step_value.value >= 0:
+
             def condition():
                 return i < end_value.value
+
         else:
+
             def condition():
                 return i > end_value.value
 
@@ -294,7 +310,9 @@ class Interpreter:
             if res.error:
                 return res
 
-        return res.success(List(elements).set_context(context).set_pos(node.pos_start, node.pos_end))
+        return res.success(
+            List(elements).set_context(context).set_pos(node.pos_start, node.pos_end)
+        )
 
     def visit_WhileNode(self, node, context: Context) -> RTResult:
         """Evaluate a while loop expression.
@@ -321,7 +339,9 @@ class Interpreter:
             if res.error:
                 return res
 
-        return res.success(List(elements).set_context(context).set_pos(node.pos_start, node.pos_end))
+        return res.success(
+            List(elements).set_context(context).set_pos(node.pos_start, node.pos_end)
+        )
 
     def visit_FuncDefNode(self, node, context: Context) -> RTResult:
         """Evaluate a function definition expression.
@@ -341,9 +361,11 @@ class Interpreter:
         func_name = node.var_name_tok.value if node.var_name_tok else None
         body_node = node.body_node
         arg_names = [arg_name.value for arg_name in node.arg_name_toks]
-        func_value = Function(func_name, body_node, arg_names).set_context(
-            context
-        ).set_pos(node.pos_start, node.pos_end)
+        func_value = (
+            Function(func_name, body_node, arg_names)
+            .set_context(context)
+            .set_pos(node.pos_start, node.pos_end)
+        )
 
         if node.var_name_tok:
             context.symbol_table.set(func_name, func_value)
@@ -400,3 +422,35 @@ class Interpreter:
                 return res
 
         return res.success(List(elements).set_pos(node.pos_start, node.pos_end))
+
+    def visit_MapNode(self, node, context: Context) -> RTResult:
+        """Evaluate a map literal node.
+
+        Args:
+            node: The MapNode to evaluate.
+            context: The current execution context.
+
+        Returns:
+            An RTResult containing the Map value.
+        """
+        res = RTResult()
+        elements = {}
+
+        for key_node, value_node in node.key_value_pairs:
+            key = res.register(self.visit(key_node, context))
+            if res.error:
+                return res
+
+            # Convert key to string for dictionary storage
+            if isinstance(key, String):
+                key_str = key.value
+            else:
+                key_str = str(key)
+
+            value = res.register(self.visit(value_node, context))
+            if res.error:
+                return res
+
+            elements[key_str] = value
+
+        return res.success(Map(elements).set_pos(node.pos_start, node.pos_end))

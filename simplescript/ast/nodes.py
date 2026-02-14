@@ -282,5 +282,31 @@ class ListNode:
 
     def __init__(self, element_nodes: list) -> None:
         self.element_nodes = element_nodes
-        self.pos_start = self.element_nodes[0].pos_start if len(self.element_nodes) > 0 else None
-        self.pos_end = self.element_nodes[len(self.element_nodes) - 1].pos_end if len(self.element_nodes) > 0 else None
+        self.pos_start = (
+            self.element_nodes[0].pos_start if len(self.element_nodes) > 0 else None
+        )
+        self.pos_end = (
+            self.element_nodes[len(self.element_nodes) - 1].pos_end
+            if len(self.element_nodes) > 0
+            else None
+        )
+
+
+class MapNode:
+    """AST node representing a map (dictionary) literal.
+
+    Args:
+        key_value_pairs: List of tuples containing (key_node, value_node) pairs.
+        pos_start: Start position of the map.
+        pos_end: End position of the map.
+
+    Attributes:
+        key_value_pairs: List of (key_node, value_node) tuples.
+        pos_start (Position): Start position.
+        pos_end (Position): End position.
+    """
+
+    def __init__(self, key_value_pairs: list, pos_start=None, pos_end=None) -> None:
+        self.key_value_pairs = key_value_pairs
+        self.pos_start = pos_start
+        self.pos_end = pos_end

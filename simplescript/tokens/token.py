@@ -28,9 +28,13 @@ class Token:
         pos_end (Position): Ending position in source text.
     """
 
-    def __init__(self, type_: str, value: Any = None,
-                 pos_start: Optional[Position] = None,
-                 pos_end: Optional[Position] = None) -> None:
+    def __init__(
+        self,
+        type_: str,
+        value: Any = None,
+        pos_start: Optional[Position] = None,
+        pos_end: Optional[Position] = None,
+    ) -> None:
         self.type = type_
         self.value = value
         if pos_start:
@@ -54,5 +58,5 @@ class Token:
 
     def __repr__(self) -> str:
         if self.value:
-            return f'{self.type}: {self.value}'
-        return f'{self.type}'
+            return f"{self.type}: {self.value}"
+        return f"{self.type}"

@@ -92,6 +92,39 @@ Advanced list usage:
 simplescript examples/lists_advanced.simc
 ```
 
+#### `maps_basic.simc`
+Map literals and basic usage:
+- Empty maps
+- Maps with string values
+- Maps with number values
+- Maps in variables
+
+```bash
+simplescript examples/maps_basic.simc
+```
+
+#### `maps_operations.simc`
+Map operations:
+- Getting values with `/`
+- Adding/updating with `+`
+- Removing keys with `-`
+- Merging maps with `*`
+
+```bash
+simplescript examples/maps_operations.simc
+```
+
+#### `maps_advanced.simc`
+Advanced map usage:
+- Maps with functions
+- Maps in conditionals
+- Nested maps
+- Maps with list values
+
+```bash
+simplescript examples/maps_advanced.simc
+```
+
 ### Advanced Examples
 
 #### `comprehensive_demo.simc`
@@ -177,6 +210,7 @@ WHILE condition THEN expression
 - Logical: `AND`, `OR`, `NOT`
 - String: `+` (concatenation), `*` (repetition)
 - List: `+` (append), `-` (remove), `*` (extend), `/` (index)
+- Map: `+` (add/update), `-` (remove key), `*` (merge), `/` (get value)
 
 ## Tips
 

@@ -1,0 +1,19 @@
+VAR person = {"name": "Alice", "age": 25}
+person
+
+VAR name = person / "name"
+name
+
+VAR age = person / "age"
+age
+
+VAR updated = person + {"city": "NYC"}
+updated
+
+VAR removed = person - "age"
+removed
+
+VAR map1 = {"a": 1, "b": 2}
+VAR map2 = {"c": 3, "d": 4}
+VAR merged = map1 * map2
+merged

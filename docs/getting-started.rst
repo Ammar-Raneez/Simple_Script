@@ -97,3 +97,17 @@ Create and manipulate lists::
     VAR list1 = [1, 2]
     VAR list2 = [3, 4]
     VAR combined = list1 * list2
+
+Maps
+~~~~
+
+Create and manipulate maps::
+
+    VAR person = {"name": "Alice", "age": 25}
+    VAR name = person / "name"
+    VAR updated = person + {"city": "NYC"}
+    VAR removed = person - "age"
+    
+    VAR map1 = {"a": 1}
+    VAR map2 = {"b": 2}
+    VAR merged = map1 * map2

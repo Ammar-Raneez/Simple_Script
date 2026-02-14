@@ -28,11 +28,11 @@ def string_with_arrows(text: str, pos_start: Position, pos_end: Position) -> str
         VAR A =
               ^
     """
-    result = ''
+    result = ""
 
     # Calculate indices
-    idx_start = max(text.rfind('\n', 0, pos_start.index), 0)
-    idx_end = text.find('\n', idx_start + 1)
+    idx_start = max(text.rfind("\n", 0, pos_start.index), 0)
+    idx_end = text.find("\n", idx_start + 1)
     if idx_end < 0:
         idx_end = len(text)
 
@@ -45,13 +45,13 @@ def string_with_arrows(text: str, pos_start: Position, pos_end: Position) -> str
         col_end = pos_end.colNumber if i == line_count - 1 else len(line) - 1
 
         # Append to result
-        result += line + '\n'
-        result += ' ' * col_start + '^' * (col_end - col_start)
+        result += line + "\n"
+        result += " " * col_start + "^" * (col_end - col_start)
 
         # Re-calculate indices
         idx_start = idx_end
-        idx_end = text.find('\n', idx_start + 1)
+        idx_end = text.find("\n", idx_start + 1)
         if idx_end < 0:
             idx_end = len(text)
 
-    return result.replace('\t', '')
+    return result.replace("\t", "")

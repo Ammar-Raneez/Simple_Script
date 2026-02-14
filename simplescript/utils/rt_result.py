@@ -22,7 +22,7 @@ class RTResult:
         self.value: Any = None
         self.error = None
 
-    def register(self, res: 'RTResult') -> Any:
+    def register(self, res: "RTResult") -> Any:
         """Register the result of a sub-operation.
 
         Absorbs any error from the sub-result and returns the computed value.
@@ -37,7 +37,7 @@ class RTResult:
             self.error = res.error
         return res.value
 
-    def success(self, value: Any) -> 'RTResult':
+    def success(self, value: Any) -> "RTResult":
         """Mark this result as successful.
 
         Args:
@@ -49,7 +49,7 @@ class RTResult:
         self.value = value
         return self
 
-    def failure(self, error) -> 'RTResult':
+    def failure(self, error) -> "RTResult":
         """Mark this result as failed.
 
         Args:
