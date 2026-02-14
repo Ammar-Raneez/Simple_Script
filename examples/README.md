@@ -59,6 +59,39 @@ Loop constructs:
 simplescript examples/loops.simc
 ```
 
+#### `lists_basic.simc`
+List literals and basic usage:
+- Integer lists
+- String lists
+- Mixed type lists
+- Empty lists
+- Nested lists
+
+```bash
+simplescript examples/lists_basic.simc
+```
+
+#### `lists_operations.simc`
+List operations:
+- Appending elements with `+`
+- Removing elements with `-`
+- Extending lists with `*`
+- Accessing elements with `/`
+
+```bash
+simplescript examples/lists_operations.simc
+```
+
+#### `lists_advanced.simc`
+Advanced list usage:
+- Lists with functions
+- Lists in conditionals
+- Using loops with lists
+
+```bash
+simplescript examples/lists_advanced.simc
+```
+
 ### Advanced Examples
 
 #### `comprehensive_demo.simc`
@@ -143,6 +176,7 @@ WHILE condition THEN expression
 - Comparison: `==`, `!=`, `<`, `>`, `<=`, `>=`
 - Logical: `AND`, `OR`, `NOT`
 - String: `+` (concatenation), `*` (repetition)
+- List: `+` (append), `-` (remove), `*` (extend), `/` (index)
 
 ## Tips
 

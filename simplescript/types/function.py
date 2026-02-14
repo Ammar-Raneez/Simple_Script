@@ -104,4 +104,5 @@ class Function(Value):
         return copy
 
     def __repr__(self) -> str:
+        """Return a string representation of this function."""
         return f"<function {self.name}>"

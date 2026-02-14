@@ -12,7 +12,7 @@ class String(Value):
     """Represents a string value in SimpleScript.
 
     Supports concatenation with other strings (using +) and repetition
-    with numbers (using *).
+    with numbers (using ``*``).
 
     Args:
         value: The string content.

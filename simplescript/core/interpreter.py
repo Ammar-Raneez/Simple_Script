@@ -4,6 +4,7 @@ This module provides the Interpreter class that evaluates an Abstract
 Syntax Tree (AST) produced by the parser, producing runtime values.
 """
 
+from simplescript.types.list import List
 from simplescript.utils.rt_result import RTResult
 from simplescript.core.constants import (
     TT_PLUS, TT_MINUS, TT_MUL, TT_DIV, TT_POW,
@@ -139,7 +140,7 @@ class Interpreter:
     def visit_BinOpNode(self, node, context: Context) -> RTResult:
         """Evaluate a binary operation expression.
 
-        Handles arithmetic (+, -, *, /, ^), comparison (==, !=, <, >, <=, >=),
+        Handles arithmetic (+, -, ``*``, /, ^), comparison (==, !=, <, >, <=, >=),
         and logical (AND, OR) operations.
 
         Args:
@@ -256,9 +257,10 @@ class Interpreter:
             context: The current execution context.
 
         Returns:
-            An RTResult containing None on completion, or an error.
+            An RTResult containing the List value on completion, or an error.
         """
         res = RTResult()
+        elements = []
 
         start_value = res.register(self.visit(node.start_value_node, context))
         if res.error:
@@ -288,11 +290,11 @@ class Interpreter:
             context.symbol_table.set(node.var_name_tok.value, Number(i))
             i += step_value.value
 
-            res.register(self.visit(node.body_node, context))
+            elements.append(res.register(self.visit(node.body_node, context)))
             if res.error:
                 return res
 
-        return res.success(None)
+        return res.success(List(elements).set_context(context).set_pos(node.pos_start, node.pos_end))
 
     def visit_WhileNode(self, node, context: Context) -> RTResult:
         """Evaluate a while loop expression.
@@ -302,9 +304,10 @@ class Interpreter:
             context: The current execution context.
 
         Returns:
-            An RTResult containing None on completion, or an error.
+            An RTResult containing the List value on completion, or an error.
         """
         res = RTResult()
+        elements = []
 
         while True:
             condition = res.register(self.visit(node.condition_node, context))
@@ -314,11 +317,11 @@ class Interpreter:
             if not condition.is_true():
                 break
 
-            res.register(self.visit(node.body_node, context))
+            elements.append(res.register(self.visit(node.body_node, context)))
             if res.error:
                 return res
 
-        return res.success(None)
+        return res.success(List(elements).set_context(context).set_pos(node.pos_start, node.pos_end))
 
     def visit_FuncDefNode(self, node, context: Context) -> RTResult:
         """Evaluate a function definition expression.
@@ -377,3 +380,23 @@ class Interpreter:
         if res.error:
             return res
         return res.success(return_value)
+
+    def visit_ListNode(self, node, context: Context) -> RTResult:
+        """Evaluate a list literal node.
+
+        Args:
+            node: The ListNode to evaluate.
+            context: The current execution context.
+
+        Returns:
+            An RTResult containing the List value.
+        """
+        res = RTResult()
+        elements = []
+
+        for element_node in node.element_nodes:
+            elements.append(res.register(self.visit(element_node, context)))
+            if res.error:
+                return res
+
+        return res.success(List(elements).set_pos(node.pos_start, node.pos_end))

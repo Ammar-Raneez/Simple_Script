@@ -7,13 +7,13 @@ into an Abstract Syntax Tree (AST) following the SimpleScript grammar.
 from typing import List, Callable, Optional
 from simplescript.utils.parse_result import ParseResult
 from simplescript.core.constants import (
-    TT_INT, TT_FLOAT, TT_STRING, TT_PLUS, TT_MINUS, TT_MUL, TT_DIV,
+    TT_INT, TT_FLOAT, TT_LSQUARE, TT_RSQUARE, TT_STRING, TT_PLUS, TT_MINUS, TT_MUL, TT_DIV,
     TT_POW, TT_LPAREN, TT_RPAREN, TT_EE, TT_EQ, TT_NE, TT_LT, TT_GT,
     TT_LTE, TT_GTE, TT_EOF, TT_IDENTIFIER, TT_KEYWORD, TT_COMMA, TT_ARROW,
 )
 from simplescript.errors.errors import InvalidSyntaxError
 from simplescript.ast.nodes import (
-    NumberNode, StringNode, BinOpNode, UnaryOpNode,
+    ListNode, NumberNode, StringNode, BinOpNode, UnaryOpNode,
     VarAccessNode, VarAssignNode, IfNode, ForNode, WhileNode,
     FuncDefNode, CallNode,
 )
@@ -135,6 +135,13 @@ class Parser:
                     "Expected ')'"
                 ))
 
+        elif token.type == TT_LSQUARE:
+            list_expr = res.register(self.list_expr())
+            if res.error:
+                return res
+
+            return res.success(list_expr)
+
         elif token.matches(TT_KEYWORD, 'IF'):
             if_expr = res.register(self.if_expr())
             if res.error:
@@ -161,7 +168,7 @@ class Parser:
 
         return res.failure(InvalidSyntaxError(
             token.pos_start, token.pos_end,
-            "Expected int, float, string, '+', '-', 'identifier', 'IF', 'FOR', 'WHILE', 'FUNC', or '('"
+            "Expected int, float, string, '+', '-', '[', 'identifier', 'IF', 'FOR', 'WHILE', 'FUNC', or '('"
         ))
 
     def call(self) -> ParseResult:
@@ -191,7 +198,7 @@ class Parser:
                 if res.error:
                     return res.failure(InvalidSyntaxError(
                         self.current_token.pos_start, self.current_token.pos_end,
-                        "Expected ')', 'VAR', 'IF', 'FOR', 'WHILE', 'FUNC', int, float, identifier, '+', '-', '(' or 'NOT'"
+                        "Expected ')', 'VAR', 'IF', 'FOR', 'WHILE', 'FUNC', int, float, identifier, '+', '-', '(', '[' or 'NOT'"
                     ))
 
                 while self.current_token.type == TT_COMMA:
@@ -519,6 +526,56 @@ class Parser:
 
         return res.success(FuncDefNode(var_name_tok, arg_name_toks, node_to_return))
 
+    def list_expr(self) -> ParseResult:
+        """Parse a list expression.
+
+        Syntax: ``[expr (COMMA expr)*]``
+
+        Returns:
+            A ParseResult containing a ListNode.
+        """
+
+        res = ParseResult()
+        element_nodes = []
+        if self.current_token.type != TT_LSQUARE:
+            return res.failure(InvalidSyntaxError(
+                self.current_token.pos_start, self.current_token.pos_end,
+                "Expected '['"
+            ))
+
+        res.register_advancement()
+        self.advance()
+
+        # Empty list
+        if self.current_token.type == TT_RSQUARE:
+            res.register_advancement()
+            self.advance()
+        else:
+            element_nodes.append(res.register(self.expr()))
+            if res.error:
+                return res.failure(InvalidSyntaxError(
+                    self.current_token.pos_start, self.current_token.pos_end,
+                    "Expected ']', int, float, string, identifier, '['"
+                ))
+
+            while self.current_token.type == TT_COMMA:
+                res.register_advancement()
+                self.advance()
+                element_nodes.append(res.register(self.expr()))
+                if res.error:
+                    return res
+
+            if self.current_token.type != TT_RSQUARE:
+                return res.failure(InvalidSyntaxError(
+                    self.current_token.pos_start, self.current_token.pos_end,
+                    "Expected ',' or ']'"
+                ))
+
+            res.register_advancement()
+            self.advance()
+
+        return res.success(ListNode(element_nodes))
+
     def comp_expr(self) -> ParseResult:
         """Parse a comparison expression.
 
@@ -544,7 +601,7 @@ class Parser:
         if res.error:
             return res.failure(InvalidSyntaxError(
                 self.current_token.pos_start, self.current_token.pos_end,
-                "Expected int, float, '+', '-', '(', 'NOT'"
+                "Expected int, float, '+', '-', '(', '[', 'NOT'"
             ))
 
         return res.success(node)
@@ -611,7 +668,7 @@ class Parser:
         if res.error:
             return res.failure(InvalidSyntaxError(
                 self.current_token.pos_start, self.current_token.pos_end,
-                'Expected Keyword, \'+\', \'-\', \'(\', \'identifier\', \'IF\', \'FOR\', \'WHILE\', \'FUNC\', or \'NOT\''
+                "Expected Keyword, '+', '-', '(', '[', identifier, 'IF', 'FOR', 'WHILE', 'FUNC', or 'NOT'"
             ))
 
         return res.success(node)
@@ -649,4 +706,5 @@ class Parser:
             if res.error:
                 return res
             left = BinOpNode(left, op_tok, right)
+
         return res.success(left)

@@ -80,6 +80,12 @@ TT_COMMA: str = 'COMMA'
 TT_ARROW: str = 'ARROW'
 """Arrow (->) token for function definitions."""
 
+TT_LSQUARE: str = 'LSQUARE'
+"""Left square bracket token for arrays."""
+
+TT_RSQUARE: str = 'RSQUARE'
+"""Right square bracket token for arrays."""
+
 KEYWORDS: list[str] = [
     'SHOW',
     'VAR',

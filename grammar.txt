@@ -20,6 +20,7 @@ atom              : INT|FLOAT|STRING|IDENTIFIER
 				  : if-expr
 				  : for-expr
 				  : while-expr
+                  : list-expr
 				  : func-def
 
 if-expr           : KEYWORD:IF expr KEYWORD:THEN expr
@@ -30,6 +31,8 @@ for-expr          : KEYWORD:FOR IDENTIFIER EQ expr KEYWORD:TO expr
                      (KEYWORD:STEP expr)? KEYWORD:THEN expr
 
 while-expr        : KEYWORD:WHILE expr KEYWORD:THEN expr
+
+list-expr         : LSQUARE (expr (COMMA expr)*)? RSQUARE
 
 func-def		  : KEYWORD:FUNC IDENTIFIER?
 					  LPAREN (IDENTIFIER (COMMA IDENTIFIER)*)? RPAREN

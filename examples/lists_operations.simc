@@ -1,0 +1,19 @@
+VAR mylist = [1, 2, 3]
+mylist
+
+VAR extended = mylist + 4
+extended
+
+VAR first = mylist / 0
+first
+
+VAR last = mylist / 2
+last
+
+VAR removed = mylist - 1
+removed
+
+VAR list1 = [1, 2]
+VAR list2 = [3, 4]
+VAR combined = list1 * list2
+combined

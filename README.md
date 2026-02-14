@@ -112,6 +112,7 @@ print(result)  # 30
 * Variables with `VAR` assignment and `SHOW` access
 * Arithmetic expressions with operator precedence
 * String type with single/double quotes and escape sequences
+* List data structure with indexing and operations
 * Named and anonymous function definitions
 * Conditional expressions (IF/ELIF/ELSE)
 * For and While loops
@@ -170,6 +171,15 @@ FOR identifier = start TO end STEP increment THEN expression
 WHILE condition THEN expression
 ```
 
+### Lists
+```
+[element1, element2, ...]  # List literal
+list + element              # Append element
+list - index               # Remove element at index
+list * other_list          # Extend list with another list
+list / index               # Get element at index
+```
+
 ## Examples
 
 ### Variables
@@ -221,6 +231,20 @@ simplescript > VAR A = 1
 simplescript > FOR i=1 TO 6 THEN VAR A = A*i
 simplescript > SHOW A
 120
+```
+
+### Lists
+```
+simplescript > VAR mylist = [1, 2, 3]
+[1, 2, 3]
+simplescript > mylist + 4
+[1, 2, 3, 4]
+simplescript > mylist / 0
+1
+simplescript > [10, 20, 30] - 1
+[10, 30]
+simplescript > [1, 2] * [3, 4]
+[1, 2, 3, 4]
 ```
 
 ### Errors

@@ -239,6 +239,142 @@ class TestStrings(unittest.TestCase):
         self.assertEqual('"hello world"', str(returned_val))
 
 
+class TestLists(unittest.TestCase):
+    """Tests for list literals and operations."""
+
+    def test_empty_list(self):
+        returned_val, returned_err = run('<stdin>', '[]')
+        self.assertEqual('[]', str(returned_val))
+        self.assertIsNone(returned_err)
+
+    def test_list_with_integers(self):
+        returned_val, returned_err = run('<stdin>', '[1, 2, 3]')
+        self.assertEqual('[1, 2, 3]', str(returned_val))
+        self.assertIsNone(returned_err)
+
+    def test_list_with_strings(self):
+        returned_val, returned_err = run('<stdin>', '["hello", "world"]')
+        self.assertEqual('["hello", "world"]', str(returned_val))
+        self.assertIsNone(returned_err)
+
+    def test_list_with_mixed_types(self):
+        returned_val, returned_err = run('<stdin>', '[1, "hello", 3.5]')
+        self.assertEqual('[1, "hello", 3.5]', str(returned_val))
+        self.assertIsNone(returned_err)
+
+    def test_list_with_expressions(self):
+        returned_val, returned_err = run('<stdin>', '[1 + 2, 5 * 3, 10 - 4]')
+        self.assertEqual('[3, 15, 6]', str(returned_val))
+        self.assertIsNone(returned_err)
+
+    def test_nested_lists(self):
+        returned_val, returned_err = run('<stdin>', '[[1, 2], [3, 4]]')
+        self.assertEqual('[[1, 2], [3, 4]]', str(returned_val))
+        self.assertIsNone(returned_err)
+
+    def test_list_in_variable(self):
+        run('<stdin>', 'VAR mylist = [10, 20, 30]')
+        returned_val, returned_err = run('<stdin>', 'SHOW mylist')
+        self.assertEqual('[10, 20, 30]', str(returned_val))
+        self.assertIsNone(returned_err)
+
+    def test_list_append(self):
+        returned_val, returned_err = run('<stdin>', '[1, 2, 3] + 4')
+        self.assertEqual('[1, 2, 3, 4]', str(returned_val))
+        self.assertIsNone(returned_err)
+
+    def test_list_append_string(self):
+        returned_val, returned_err = run('<stdin>', '["a", "b"] + "c"')
+        self.assertEqual('["a", "b", "c"]', str(returned_val))
+        self.assertIsNone(returned_err)
+
+    def test_list_extend(self):
+        returned_val, returned_err = run('<stdin>', '[1, 2] * [3, 4]')
+        self.assertEqual('[1, 2, 3, 4]', str(returned_val))
+        self.assertIsNone(returned_err)
+
+    def test_list_get_element(self):
+        returned_val, returned_err = run('<stdin>', '[10, 20, 30] / 0')
+        self.assertEqual('10', str(returned_val))
+        self.assertIsNone(returned_err)
+
+    def test_list_get_element_last(self):
+        returned_val, returned_err = run('<stdin>', '[10, 20, 30] / 2')
+        self.assertEqual('30', str(returned_val))
+        self.assertIsNone(returned_err)
+
+    def test_list_remove_element(self):
+        returned_val, returned_err = run('<stdin>', '[10, 20, 30] - 1')
+        self.assertEqual('[10, 30]', str(returned_val))
+        self.assertIsNone(returned_err)
+
+    def test_list_remove_first_element(self):
+        returned_val, returned_err = run('<stdin>', '[10, 20, 30] - 0')
+        self.assertEqual('[20, 30]', str(returned_val))
+        self.assertIsNone(returned_err)
+
+    def test_list_in_conditional(self):
+        returned_val, returned_err = run('<stdin>', 'IF 1 == 1 THEN [1, 2, 3] ELSE [4, 5, 6]')
+        self.assertEqual('[1, 2, 3]', str(returned_val))
+        self.assertIsNone(returned_err)
+
+    def test_list_with_function(self):
+        run('<stdin>', 'FUNC get_list() -> [1, 2, 3]')
+        returned_val, returned_err = run('<stdin>', 'get_list()')
+        self.assertEqual('[1, 2, 3]', str(returned_val))
+        self.assertIsNone(returned_err)
+
+    def test_list_operations_in_variable(self):
+        run('<stdin>', 'VAR list1 = [1, 2]')
+        returned_val, returned_err = run('<stdin>', 'VAR list2 = list1 + 3')
+        self.assertEqual('[1, 2, 3]', str(returned_val))
+        self.assertIsNone(returned_err)
+
+    def test_list_extend_variables(self):
+        run('<stdin>', 'VAR list1 = [1, 2]')
+        run('<stdin>', 'VAR list2 = [3, 4]')
+        returned_val, returned_err = run('<stdin>', 'list1 * list2')
+        self.assertEqual('[1, 2, 3, 4]', str(returned_val))
+        self.assertIsNone(returned_err)
+
+    def test_list_single_element(self):
+        returned_val, returned_err = run('<stdin>', '[42]')
+        self.assertEqual('[42]', str(returned_val))
+        self.assertIsNone(returned_err)
+
+    def test_list_with_nested_expressions(self):
+        returned_val, returned_err = run('<stdin>', '[1, 2 + 3, 4 * 5]')
+        self.assertEqual('[1, 5, 20]', str(returned_val))
+        self.assertIsNone(returned_err)
+
+
+class TestListErrors(unittest.TestCase):
+    """Tests for list error handling."""
+
+    def test_list_index_out_of_bounds(self):
+        returned_val, returned_err = run('<stdin>', '[1, 2, 3] / 5')
+        self.assertIsNone(returned_val)
+        self.assertIsInstance(returned_err, RTError)
+        self.assertIn('out of bounds', returned_err.details)
+
+    def test_list_remove_index_out_of_bounds(self):
+        returned_val, returned_err = run('<stdin>', '[1, 2, 3] - 10')
+        self.assertIsNone(returned_val)
+        self.assertIsInstance(returned_err, RTError)
+        self.assertIn('out of bounds', returned_err.details)
+
+    def test_list_negative_index(self):
+        # Python allows negative indexing, so -1 gets the last element
+        returned_val, returned_err = run('<stdin>', '[1, 2, 3] / -1')
+        self.assertEqual('3', str(returned_val))
+        self.assertIsNone(returned_err)
+
+    def test_empty_list_index(self):
+        returned_val, returned_err = run('<stdin>', '[] / 0')
+        self.assertIsNone(returned_val)
+        self.assertIsInstance(returned_err, RTError)
+
+
 class TestErrors(unittest.TestCase):
     """Tests for error handling."""
 

@@ -5,6 +5,16 @@ All notable changes to SimpleScript will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/2.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- List data structure with square bracket syntax `[1, 2, 3]`
+- List operations: append (`+`), remove by index (`-`), extend (`*`), get by index (`/`)
+- Support for empty lists, nested lists, and mixed-type lists
+- 24 comprehensive unit tests for list functionality
+- List example scripts: `lists_basic.simc`, `lists_operations.simc`, `lists_advanced.simc`
+- List documentation in README, language reference, and getting started guide
+
 ## [2.0.0] - 2026-02-08
 
 ### Added

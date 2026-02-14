@@ -12,6 +12,7 @@ from simplescript.core.constants import (
     TT_INT, TT_FLOAT, TT_STRING, TT_PLUS, TT_MINUS, TT_MUL, TT_DIV,
     TT_POW, TT_LPAREN, TT_RPAREN, TT_EE, TT_EQ, TT_NE, TT_LT, TT_GT,
     TT_LTE, TT_GTE, TT_EOF, TT_IDENTIFIER, TT_KEYWORD, TT_COMMA, TT_ARROW,
+    TT_LSQUARE, TT_RSQUARE,
 )
 from simplescript.errors.errors import IllegalCharError, ExpectedCharError, Error
 
@@ -95,6 +96,12 @@ class Lexer:
                 self.advance()
             elif self.current_char == ')':
                 tokens.append(Token(TT_RPAREN, pos_start=self.pos))
+                self.advance()
+            elif self.current_char == '[':
+                tokens.append(Token(TT_LSQUARE, pos_start=self.pos))
+                self.advance()
+            elif self.current_char == ']':
+                tokens.append(Token(TT_RSQUARE, pos_start=self.pos))
                 self.advance()
             elif self.current_char == '!':
                 token, error = self.make_not_equals()

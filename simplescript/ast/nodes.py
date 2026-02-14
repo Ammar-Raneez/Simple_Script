@@ -266,3 +266,21 @@ class CallNode:
             self.pos_end = self.arg_nodes[len(self.arg_nodes) - 1].pos_end
         else:
             self.pos_end = self.node_to_call.pos_end
+
+
+class ListNode:
+    """AST node representing a list.
+
+    Args:
+        element_nodes: List of element nodes.
+
+    Attributes:
+        element_nodes: List of element AST nodes.
+        pos_start (Position): Start position (from the first element).
+        pos_end (Position): End position (from the last element).
+    """
+
+    def __init__(self, element_nodes: list) -> None:
+        self.element_nodes = element_nodes
+        self.pos_start = self.element_nodes[0].pos_start if len(self.element_nodes) > 0 else None
+        self.pos_end = self.element_nodes[len(self.element_nodes) - 1].pos_end if len(self.element_nodes) > 0 else None

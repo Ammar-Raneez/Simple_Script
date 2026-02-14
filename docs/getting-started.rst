@@ -83,3 +83,17 @@ While loops::
 
     VAR count = 0
     WHILE count < 10 THEN VAR count = count + 1
+
+Lists
+~~~~~
+
+Create and manipulate lists::
+
+    VAR numbers = [1, 2, 3, 4, 5]
+    VAR first = numbers / 0
+    VAR extended = numbers + 6
+    VAR removed = numbers - 2
+    
+    VAR list1 = [1, 2]
+    VAR list2 = [3, 4]
+    VAR combined = list1 * list2

@@ -248,6 +248,7 @@ class Value:
         """
         if not other:
             other = self
+
         return RTError(
             self.pos_start, other.pos_end,
             'Illegal operation',
